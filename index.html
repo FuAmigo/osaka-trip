@@ -194,11 +194,9 @@ exp:[],line:''});
 
 /* ============ 狀態與同步 ============ */
 const $=s=>document.querySelector(s);
-let openS={},S=null,tab='trip',day=0,ref=null,online=false;
+let conn=false,openS={},S=null,tab='trip',day=0,ref=null,online=false;
 const LKEY='osaka-kyoto-trip';
-const room=(new URLSearchParams(location.search).get('room'))||localStorage.getItem('room')||(()=>{const r=Math.random().toString(36).slice(2,8);return r})();
-localStorage.setItem('room',room);
-if(!new URLSearchParams(location.search).get('room')){history.replaceState(null,'','?room='+room)}
+const room=new URLSearchParams(location.search).get('room')||'trip-k7m2x9';
 const arr=v=>v?Object.values(v):[];
 function norm(s){s=s||SEED();s.items=s.items||{};for(let i=0;i<5;i++)s.items[i]=arr(s.items[i]).map(x=>({...x,g:x.g||{}}));
  ['pack','prep','shop','exp'].forEach(k=>s[k]=arr(s[k]));s.line=s.line||'';
@@ -212,11 +210,12 @@ function norm(s){s=s||SEED();s.items=s.items||{};for(let i=0;i<5;i++)s.items[i]=
  s.shop=s.shop.map(x=>({jp:'',tw:'',...x,store:x.store||'其他'}));
  s.shop.forEach(x=>{if(!s.stores.includes(x.store))s.stores.push(x.store)});
  Object.values(s.items).forEach(a=>a.forEach(x=>{if(!x.tr&&TR[x.name])x.tr=TR[x.name]}));return s}
-function save(){localStorage.setItem(LKEY+room,JSON.stringify(S));if(ref)ref.set(S);R()}
+function save(){localStorage.setItem(LKEY+room,JSON.stringify(S));if(ref)ref.set(JSON.parse(JSON.stringify(S))).catch(e=>alert('同步失敗：'+e.message));R()}
 function boot(){
  const local=localStorage.getItem(LKEY+room);S=norm(local?JSON.parse(local):null);
  if(FIREBASE_CONFIG&&window.firebase){
   firebase.initializeApp(FIREBASE_CONFIG);ref=firebase.database().ref('rooms/'+room);online=true;
+  firebase.database().ref('.info/connected').on('value',s=>{conn=!!s.val();if(!(document.activeElement&&document.activeElement.tagName==='INPUT'))R()});
   ref.on('value',snap=>{const v=snap.val();if(v===null){ref.set(S);return}
    S=norm(v);if(!(v.v>=3&&v.iv>=3))ref.set(S);localStorage.setItem(LKEY+room,JSON.stringify(S));
    if(!(document.activeElement&&document.activeElement.tagName==='INPUT'))R()});
@@ -229,7 +228,7 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const enc=encodeURIComponent;
 const navURL=x=>`https://www.google.com/maps/dir/?api=1&destination=${enc(x.jp||x.name)}&travelmode=transit`;
 function R(){
- $('#nav').innerHTML=`<div class="hd"><span class="logo">🍂</span><b>大阪・京都手帳</b><button class="sync th" data-a="theme" aria-label="換主題">🎨</button><button class="sync ${online?'':'off'}" data-a="${online?'share':'noop'}"><i></i>${online?'已同步':'單機'}</button></div><div class="clk" id="clk"></div><div class="tabs">`+
+ $('#nav').innerHTML=`<div class="hd"><span class="logo">🍂</span><b>大阪・京都手帳</b><button class="sync th" data-a="theme" aria-label="換主題">🎨</button><button class="sync ${conn?'':'off'}" data-a="${online?'share':'noop'}"><i></i>${!online?'單機':conn?'已同步':'連線中…'}</button></div><div class="clk" id="clk"></div><div class="tabs">`+
   [['trip','🗾','行程'],['pack','🧳','行李'],['shop','🛍️','購物'],['exp','💴','記帳']].map(([k,e,t])=>`<button class="${tab===k?'on':''}" data-a="tab" data-v="${k}"><span>${e}</span>${t}</button>`).join('')+`</div>`;
  let h='';
  if(!online)h+=`<div class="banner">目前是「單機模式」，資料只存在這支手機。填入 Firebase 設定後，知道連結的人就能即時同步。</div>`;
