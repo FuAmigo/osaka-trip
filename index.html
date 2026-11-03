@@ -114,6 +114,8 @@ nav{border-bottom:1.5px solid var(--bd);box-shadow:0 8px 16px -14px rgba(91,67,5
 .tabs button{font-size:11px;padding:4px 0}.tabs button span{font-size:20px}
 .mem{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.mc{border:1.5px solid var(--bd);border-radius:12px;padding:2px 8px;font-size:13px;display:inline-flex;gap:4px;align-items:center;background:var(--card)}.mc input{width:18px;height:18px;accent-color:var(--ink);padding:0}
 .sr{display:flex;gap:8px;align-items:center;padding:7px 0;border-top:1px dashed var(--bd);font-size:13px;flex-wrap:wrap}.pos{color:#2f9e63}.neg{color:#d9534f}
+.xc{position:sticky;top:0;float:right;z-index:3;width:36px;height:36px;margin:-6px -6px 0 8px;border-radius:50%;border:1.5px solid var(--bd);background:var(--card);color:var(--ink);font:inherit;font-size:16px;line-height:1;cursor:pointer;box-shadow:var(--sd)}
+.intro{font-size:13px;margin:3px 0}.pv{background:#ffd9d9}
 </style>
 </head>
 <body>
@@ -188,8 +190,8 @@ const ITIN0=()=>{_i=0;return {
  J('food','12:45','551蓬萊 豚饅 午餐','551蓬萊 難波','現場吃完，不要帶走','45 分','難波站周邊分店',{story:'大阪靈魂小吃。依台灣檢疫規定，日本豬肉製品通常不可攜帶入境，請現場吃完。',eat:['豚饅'],menu:['豚まん','焼売'],ticket:'約 ¥500–1,000'}),
  J('transit','14:30','取行李 → 前往關西機場','南海 難波駅','18:30 起飛，建議 15:30 前到機場','車程約 40 分','南海電鐵難波站 → 關西機場，預留退稅與報到時間',{story:'國際線建議起飛前約 3 小時抵達。'})]}};
 const EM={'關西機場（抵達）':'✈️','飯店放行李':'🏨','丸美衣料 太子店':'👗','通天閣・新世界':'🗼','阿倍野展望台（HARUKAS 300）':'🌇','心齋橋筋商店街':'🛍️','道頓堀':'🦀','錦市場':'🍢','宇治老街（抹茶午餐）':'🍵','平等院':'⛩️','任天堂博物館':'🍄','京都寶可夢中心':'⚡','勝尾寺':'🎎','天保山市場 午餐':'🍤','天保山海遊館':'🐋','梅田':'🌃','KKday 一日遊 集合':'🚌','嵐山':'🎋','金閣寺':'🏯','返回大阪':'🚌','難波八阪神社':'🦁','老爺爺蛋糕 難波本店':'🧀','退房、寄放行李':'🧳','難波周邊最後採買':'🛍️','551蓬萊 豚饅 午餐':'🥟','取行李 → 前往關西機場':'✈️'};
-const VER='v8';
-const FOOD0=()=>{let n=0;const f=(area,name,dish,price)=>({id:'f'+(n++),area,name,dish,price,done:false});return [
+const VER='v9';
+const FOOD0=()=>{let n=0;const IN={"たこ家道頓堀くくる": "道頓堀代表性的章魚燒店，章魚塊大、外酥內軟，常有排隊人潮，可選原味、醬油或蔥花口味。", "美津の（大阪燒）": "道頓堀的大阪燒老字號，招牌是加了山芋的「山芋燒」，口感鬆軟綿密。", "蟹道樂 道頓堀本店": "以大螃蟹招牌聞名的螃蟹料理店，有各式螃蟹套餐，價位偏高，建議先訂位。", "Pablo 起司塔": "半熟起司塔專賣店，現烤的外層酥脆、內餡濃郁，可選原味或季節口味。", "串炸 だるま": "新世界的串炸名店，戴眼鏡大叔看板是招牌，記得串炸醬汁不可二次沾。", "串炸 八重勝": "新世界另一間串炸老店，串炸食材種類多，適合一次嚐鮮。", "錦市場 豆乳甜甜圈": "京都錦市場的排隊小吃，以豆乳製作，口感鬆軟微甜，現炸現吃最好吃。", "三木雞卵（玉子燒）": "錦市場的知名玉子燒，用高湯煎出柔軟濕潤的口感，可站著邊走邊吃。", "中村藤吉 本店": "宇治的抹茶老舖，甜點用自家茶葉製作，假日常大排長龍，建議先抽號碼牌。", "伊藤久右衛門 本店": "宇治茶舖，以抹茶甜點與抹茶料理聞名，可選抹茶パフェ或抹茶蕎麥麵。", "天保山 浪花食堂街": "位在天保山市集內，重現昭和年代的大阪街景，集合大阪燒、章魚燒、炸串，逛完海遊館剛好用餐。", "千房 梅田": "大阪燒的老字號連鎖，可在鐵板前吃到現做的大阪燒，口味選擇多。", "嵐山 街邊小吃": "渡月橋到竹林沿路有炸可樂餅、抹茶霜淇淋等邊走邊吃的小吃，逛街時順便補充體力。", "嵯峨野 湯豆腐": "嵯峨野一帶以湯豆腐聞名，冬天吃特別暖心，套餐以豆腐料理為主，清淡健康。", "老爺爺蛋糕 難波本店": "大阪名物起司蛋糕，口感綿密輕盈，剛出爐時風味最好，建議開店前先排隊。", "551蓬萊 難波": "大阪人氣肉包店，豚饅外皮鬆軟、內餡多汁；依台灣檢疫規定，豬肉製品通常不可攜帶入境，請現場吃完。"};const f=(area,name,dish,price)=>({id:'f'+(n++),area,name,dish,price,intro:IN[name]||'',done:false});return [
 f('D1 道頓堀・心齋橋','たこ家道頓堀くくる','章魚燒 8 顆','約 ¥700–900'),f('D1 道頓堀・心齋橋','美津の（大阪燒）','山芋燒、豚玉','約 ¥1,500–2,500'),
 f('D1 道頓堀・心齋橋','蟹道樂 道頓堀本店','螃蟹套餐','約 ¥5,000–10,000'),f('D1 道頓堀・心齋橋','Pablo 起司塔','現烤起司塔','約 ¥800–1,200'),
 f('D1 新世界','串炸 だるま','牛肉串、蓮藕串','每串約 ¥150–250'),f('D1 新世界','串炸 八重勝','串炸套餐','每串約 ¥150–250'),
@@ -223,6 +225,7 @@ function norm(s){s=s||SEED();s.items=s.items||{};for(let i=0;i<5;i++)s.items[i]=
  s.members=arr(s.members);s.exp=s.exp.map(x=>({...x,payer:x.payer||x.who||'',split:arr(x.split)}));
  s.exp.forEach(x=>{if(x.payer&&!s.members.includes(x.payer))s.members.push(x.payer)});
  if(!(s.fv>=1)){s.food=arr(s.food);if(!s.food.length)s.food=FOOD0();s.coll=arr(s.coll);if(!s.coll.length)s.coll=COLL0();s.fv=1}
+ if(!(s.fv>=2)){const m=Object.fromEntries(FOOD0().map(x=>[x.name,x.intro]));s.food=s.food.map(x=>({...x,intro:x.intro||m[x.name]||''}));s.fv=2}
  s.food=arr(s.food);s.coll=arr(s.coll);
  if(!(s.iv>=3)){const N=ITIN0();for(let d=0;d<5;d++){const keep=s.items[d].filter(x=>!OLDN.has(x.name)&&!/^[ij]\d+$/.test(x.id));s.items[d]=[...N[d],...keep].sort((a,b)=>a.time.localeCompare(b.time))}s.iv=3}
  if(!(s.v>=2)){s.pack=s.pack.filter(x=>!/^p[0-5]$/.test(x.id));const hv=new Set(s.pack.map(x=>x.text));PACK0().forEach(x=>{if(!hv.has(x.text))s.pack.push(x)});
@@ -243,7 +246,7 @@ function save(){
  R()}
 function apply(v){S=norm(v);shadow=flat(clean(S));ready=true;lastSync=new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit',hour12:false});
  localStorage.setItem(LKEY+room,JSON.stringify(S));
- if(!(v.v>=3&&v.iv>=3&&v.fv>=1))ref.set(clean(S));
+ if(!(v.v>=3&&v.iv>=3&&v.fv>=2))ref.set(clean(S));
  if(!(document.activeElement&&document.activeElement.tagName==='INPUT'))R()}
 function boot(){
  const local=localStorage.getItem(LKEY+room);S=norm(local?JSON.parse(local):null);
@@ -318,7 +321,7 @@ function guide(i){
  <div class="sec">🍴 附近在地人美食</div>
  <a class="lk" target="_blank" rel="noopener" href="https://www.google.com/maps/search/${enc('美食')}/@?q=${enc((x.jp||x.name)+' 周辺 グルメ')}">📍 地圖看周邊餐廳（評價排序）</a>
  <a class="lk" target="_blank" rel="noopener" href="https://tabelog.com/rst/rstsearch?sw=${enc(x.jp||x.name)}">🍙 食べログ 在地人評分</a></div>`;
- $('#sheet').classList.add('show');
+ showSheet();
 }
 function addForm(){
  $('#sheet').innerHTML=`<div class="pane"><h2>新增行程 · ${DAYS[day][0]}</h2>
@@ -329,7 +332,7 @@ function addForm(){
  <label>行程說明</label><input id="f-note">
  <label>交通提醒</label><input id="f-tr" placeholder="例：搭地鐵到難波站，步行 5 分">
  <div class="btns"><button class="btn p" data-a="saveadd">加入</button><button class="btn" data-a="close">取消</button></div></div>`;
- $('#sheet').classList.add('show');
+ showSheet();
 }
 function hotelView(){
  const o=S.hotel,L=(e,t,v)=>v?`<div class="hl">${e} <b>${t}</b> ${esc(v)}</div>`:'';
@@ -422,14 +425,14 @@ function foodView(){
  const L=S.food,areas=[...new Set(L.map(x=>x.area))],dn=L.filter(x=>x.done).length;
  let h=`<div class="sec big">🍜 美食清單（${dn}/${L.length}）</div><div class="sub">價位為參考，以現場菜單為準；勾選＝已吃過</div>
  <div class="frm"><label>新增美食</label><div class="in"><select id="f-a">${areas.map(a=>`<option>${esc(a)}</option>`).join('')}<option value="__new">＋新增區域…</option></select></div>
- <div class="in"><input id="f-n" placeholder="店名"></div><div class="in"><input id="f-d" placeholder="必點"><input id="f-p" placeholder="價位 例：約 ¥1,000"></div>
+ <div class="in"><input id="f-n" placeholder="店名"></div><div class="in"><input id="f-i" placeholder="簡單介紹（選填）"></div><div class="in"><input id="f-d" placeholder="必點"><input id="f-p" placeholder="價位 例：約 ¥1,000"></div>
  <div class="in"><button class="btn p" data-a="addfood" style="flex:1">加入美食</button></div></div>`;
  areas.forEach((a,ai)=>{const its=L.map((x,i)=>({x,i})).filter(o=>o.x.area===a),d=its.filter(o=>o.x.done).length,key='f:'+a;
   h+=`<div class="store ${openS[key]?'open':''}"><div class="sh" data-a="tog" data-v="${esc(key)}"><div class="bdg" style="background:${SC[ai%SC.length]}">${esc(a.slice(0,2))}</div>
   <div class="n">${esc(a.replace(/^D\d\s*/,''))}<small>${a.slice(0,2)}・${its.length} 間</small></div><span class="pill">${d}/${its.length}</span><span class="chev">⌄</span></div>
   <div class="sb">${its.map(({x,i})=>`<div class="it ${x.done?'done':''}"><input type="checkbox" ${x.done?'checked':''} data-a="chk" data-k="food" data-v="${i}">
-   <div style="flex:1;min-width:0"><div class="nm2">${esc(x.name)}</div>${x.dish?`<div class="sub">必點：${esc(x.dish)}</div>`:''}
-   ${x.price?`<span class="pr pj">${esc(x.price)}</span>`:''}<a class="pr" target="_blank" rel="noopener" href="https://www.google.com/maps/search/${enc(x.name)}">📍 地圖</a></div>
+   <div style="flex:1;min-width:0"><div class="nm2">${esc(x.name)}</div>${x.intro?`<div class="intro">${esc(x.intro)}</div>`:''}${x.dish?`<div class="sub">必點：${esc(x.dish)}</div>`:''}
+   ${x.price?`<span class="pr pj">${esc(x.price)}</span>`:''}<a class="pr" target="_blank" rel="noopener" href="https://www.google.com/maps/search/${enc(x.name)}">📍 地圖</a><a class="pr pv" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=${enc(x.name+' 美食 vlog')}&sp=EgIIBQ%253D%253D">▶ 影片</a></div>
    <button class="x" style="position:static" data-a="delli" data-k="food" data-v="${i}">×</button></div>`).join('')}</div></div>`});
  return h}
 function collView(){
@@ -472,14 +475,14 @@ document.addEventListener('click',e=>{
  if(a==='tab'){tab=v;R()}
  else if(a==='edit'){const x=S[k][+v],t=prompt('修改內容',x.text);if(t&&t.trim()){x.text=t.trim();save()}}
  else if(a==='copyaddr'){navigator.clipboard?.writeText(S.hotel.addr);alert('已複製地址，可給計程車司機看')}
- else if(a==='hedit'){$('#sheet').innerHTML=`<div class="pane"><h2>編輯住宿資訊</h2>${HF.map(([key,t])=>`<label>${t}</label><input id="h-${key}" value="${esc(S.hotel[key])}">`).join('')}<div class="btns"><button class="btn p" data-a="hsave">儲存</button><button class="btn" data-a="close">取消</button></div></div>`;$('#sheet').classList.add('show')}
+ else if(a==='hedit'){$('#sheet').innerHTML=`<div class="pane"><h2>編輯住宿資訊</h2>${HF.map(([key,t])=>`<label>${t}</label><input id="h-${key}" value="${esc(S.hotel[key])}">`).join('')}<div class="btns"><button class="btn p" data-a="hsave">儲存</button><button class="btn" data-a="close">取消</button></div></div>`;showSheet()}
  else if(a==='hsave'){HF.forEach(([key])=>S.hotel[key]=$('#h-'+key).value.trim());$('#sheet').classList.remove('show');save()}
- else if(a==='theme'){const c=document.documentElement.dataset.theme;$('#sheet').innerHTML=`<div class="pane"><h2>🎨 選擇主題</h2><div class="btns">${THEMES.map(t=>`<button class="btn ${c===t?'p':''}" data-a="settheme" data-v="${t}">${TN[t]}</button>`).join('')}</div></div>`;$('#sheet').classList.add('show')}
+ else if(a==='theme'){const c=document.documentElement.dataset.theme;$('#sheet').innerHTML=`<div class="pane"><h2>🎨 選擇主題</h2><div class="btns">${THEMES.map(t=>`<button class="btn ${c===t?'p':''}" data-a="settheme" data-v="${t}">${TN[t]}</button>`).join('')}</div></div>`;showSheet()}
  else if(a==='settheme'){document.documentElement.dataset.theme=v;localStorage.setItem('theme',v);$('#sheet').classList.remove('show');R()}
  else if(a==='day'){day=+v;R()}
  else if(a==='open')guide(+v);
  else if(a==='close')$('#sheet').classList.remove('show');
- else if(a==='del'){e.stopPropagation();if(confirm('刪除這個行程？')){S.items[day].splice(+v,1);save()}}
+ else if(a==='del'){e.stopPropagation();if(confirm('確定要刪除「'+S.items[day][+v].name+'」嗎？')){S.items[day].splice(+v,1);save()}}
  else if(a==='addform')addForm();
  else if(a==='saveadd'){const n=$('#f-name').value.trim();if(!n)return;
   S.items[day].push(Object.assign(I($('#f-type').value,$('#f-time').value,n,$('#f-jp').value.trim(),$('#f-note').value.trim()),{tr:$('#f-tr').value.trim()}));
@@ -487,26 +490,27 @@ document.addEventListener('click',e=>{
  else if(a==='addli'){const t=$('#n-in').value.trim();if(!t)return;let g=v==='prep'?'行前準備':($('#n-g')?$('#n-g').value:'其他用品');if(g==='__new'){g=(prompt('新分類名稱')||'').trim();if(!g)return}S[v].push({id:Date.now()+'',text:t,g,done:false,c:0});save()}
  else if(a==='chk'){S[k][+v].done=b.checked;save()}
  else if(a==='col'){S[k][+v].c=((S[k][+v].c||0)+1)%PAL.length;save()}
- else if(a==='delli'){S[k].splice(+v,1);save()}
+ else if(a==='delli'){const x=S[k][+v];if(confirm('確定要刪除「'+(x.text||x.name||'此項目')+'」嗎？')){S[k].splice(+v,1);save()}}
  else if(a==='addexp'){const t=$('#e-t').value.trim(),m=$('#e-a').value,w=$('#e-w')?$('#e-w').value:'',sp=[...document.querySelectorAll('.sp:checked')].map(i=>i.value);
   if(!t||!m||!w||!sp.length){alert('請填項目、金額、誰先付，並至少勾選一位分攤的人（沒有成員請先新增）');return}
   localStorage.setItem('who',w);S.exp.push({id:Date.now()+'',text:t,amt:+m,cat:$('#e-c').value,payer:w,split:sp});save()}
  else if(a==='addmem'){const n=$('#m-in').value.trim();if(!n||S.members.includes(n))return;S.members.push(n);save()}
- else if(a==='delmem'){const n=S.members[+v];if(S.exp.some(x=>x.payer===n||(x.split||[]).includes(n))){alert('這位成員已有記帳紀錄，無法刪除');return}S.members.splice(+v,1);save()}
+ else if(a==='delmem'){const n=S.members[+v];if(S.exp.some(x=>x.payer===n||(x.split||[]).includes(n))){alert('這位成員已有記帳紀錄，無法刪除');return}if(confirm('確定要刪除成員「'+n+'」嗎？')){S.members.splice(+v,1);save()}}
  else if(a==='spall'||a==='spnone'){document.querySelectorAll('.sp').forEach(i=>i.checked=a==='spall')}
- else if(a==='addfood'){const n=$('#f-n').value.trim();if(!n)return;let ar=$('#f-a').value;if(ar==='__new'){ar=(prompt('新區域名稱（例：D3 梅田）')||'').trim();if(!ar)return}openS['f:'+ar]=true;S.food.push({id:Date.now()+'',area:ar,name:n,dish:$('#f-d').value.trim(),price:$('#f-p').value.trim(),done:false});save()}
+ else if(a==='addfood'){const n=$('#f-n').value.trim();if(!n)return;let ar=$('#f-a').value;if(ar==='__new'){ar=(prompt('新區域名稱（例：D3 梅田）')||'').trim();if(!ar)return}openS['f:'+ar]=true;S.food.push({id:Date.now()+'',area:ar,name:n,dish:$('#f-d').value.trim(),price:$('#f-p').value.trim(),intro:$('#f-i').value.trim(),done:false});save()}
  else if(a==='addcoll'){const n=$('#c-n').value.trim();if(!n)return;S.coll.push({id:Date.now()+'',kind:$('#c-k').value,name:n,place:$('#c-p').value.trim(),price:$('#c-m').value.trim(),note:'',done:false});save()}
  else if(a==='tog'){openS[v]=!openS[v];R()}
  else if(a==='addshop')addShop();
- else if(a==='zoom'){const x=S.shop[+v];$('#sheet').innerHTML=`<div class="pane"><h2>${esc(x.text)}</h2><img src="${x.img}" alt="" style="width:100%;border-radius:18px;border:1.5px solid var(--bd)"><div class="btns"><label class="btn p">換照片<input type="file" accept="image/*" hidden data-ph="${v}"></label><button class="btn" data-a="delph" data-v="${v}">刪除照片</button><button class="btn" data-a="close">關閉</button></div></div>`;$('#sheet').classList.add('show')}
- else if(a==='delitph'){delete S.items[day][+v].img;$('#sheet').classList.remove('show');save()}
- else if(a==='delph'){delete S.shop[+v].img;$('#sheet').classList.remove('show');save()}
+ else if(a==='zoom'){const x=S.shop[+v];$('#sheet').innerHTML=`<div class="pane"><h2>${esc(x.text)}</h2><img src="${x.img}" alt="" style="width:100%;border-radius:18px;border:1.5px solid var(--bd)"><div class="btns"><label class="btn p">換照片<input type="file" accept="image/*" hidden data-ph="${v}"></label><button class="btn" data-a="delph" data-v="${v}">刪除照片</button><button class="btn" data-a="close">關閉</button></div></div>`;showSheet()}
+ else if(a==='delitph'){if(confirm('確定要刪除這張照片嗎？')){delete S.items[day][+v].img;$('#sheet').classList.remove('show');save()}}
+ else if(a==='delph'){if(confirm('確定要刪除這張照片嗎？')){delete S.shop[+v].img;$('#sheet').classList.remove('show');save()}}
  else if(a==='addstore'){const t=$('#st-in').value.trim();if(!t||S.stores.includes(t))return;S.stores.push(t);openS[t]=true;save()}
  else if(a==='delstore'){const st=S.stores[+v];if(confirm('刪除「'+st+'」和裡面所有商品？')){S.shop=S.shop.filter(x=>x.store!==st);S.stores.splice(+v,1);save()}}
  else if(a==='editp'){const x=S.shop[+v],j=prompt('日本價格（¥）',x.jp||'');if(j===null)return;const t=prompt('台灣價格（NT$，可留空）',x.tw||'');if(t===null)return;const pv=prompt('之前買的金額（可留空，例：¥800 或 NT$350）',x.prev||'');if(pv===null)return;x.jp=j.replace(/\D/g,'');x.tw=t.replace(/\D/g,'');x.prev=pv.trim();save()}
  else if(a==='saveline'){S.line=$('#l-in').value.trim();save()}
  else if(a==='share'){e.preventDefault();navigator.clipboard?.writeText(location.href);alert('已複製！傳給旅伴就能一起編輯')}
 });
+function showSheet(){const s=$('#sheet'),p=s.querySelector&&s.querySelector('.pane');if(p&&!p.querySelector('.xc'))p.insertAdjacentHTML('afterbegin','<button class="xc" data-a="close" aria-label="關閉">✕</button>');s.classList.add('show')}
 function squeeze(f){return new Promise(r=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,600/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.6))};im.onerror=()=>r('');im.src=u})}
 async function addShop(){const t=$('#s-name').value.trim();if(!t)return;const f=$('#s-ph').files[0],st=$('#s-store').value;
  const x={id:Date.now()+'',store:st,text:t,jp:$('#s-jp').value,tw:$('#s-tw').value,prev:$('#s-prev').value.trim(),done:false,c:0};if(f){const m=await squeeze(f);if(m)x.img=m}
