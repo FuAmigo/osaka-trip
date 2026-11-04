@@ -116,6 +116,7 @@ nav{border-bottom:1.5px solid var(--bd);box-shadow:0 8px 16px -14px rgba(91,67,5
 .sr{display:flex;gap:8px;align-items:center;padding:7px 0;border-top:1px dashed var(--bd);font-size:13px;flex-wrap:wrap}.pos{color:#2f9e63}.neg{color:#d9534f}
 .xc{position:sticky;top:0;float:right;z-index:3;width:36px;height:36px;margin:-6px -6px 0 8px;border-radius:50%;border:1.5px solid var(--bd);background:var(--card);color:var(--ink);font:inherit;font-size:16px;line-height:1;cursor:pointer;box-shadow:var(--sd)}
 .intro{font-size:13px;margin:3px 0}.pv{background:#ffd9d9}
+.ph{overflow:hidden}
 </style>
 </head>
 <body>
@@ -190,7 +191,10 @@ const ITIN0=()=>{_i=0;return {
  J('food','12:45','551蓬萊 豚饅 午餐','551蓬萊 難波','現場吃完，不要帶走','45 分','難波站周邊分店',{story:'大阪靈魂小吃。依台灣檢疫規定，日本豬肉製品通常不可攜帶入境，請現場吃完。',eat:['豚饅'],menu:['豚まん','焼売'],ticket:'約 ¥500–1,000'}),
  J('transit','14:30','取行李 → 前往關西機場','南海 難波駅','18:30 起飛，建議 15:30 前到機場','車程約 40 分','南海電鐵難波站 → 關西機場，預留退稅與報到時間',{story:'國際線建議起飛前約 3 小時抵達。'})]}};
 const EM={'關西機場（抵達）':'✈️','飯店放行李':'🏨','丸美衣料 太子店':'👗','通天閣・新世界':'🗼','阿倍野展望台（HARUKAS 300）':'🌇','心齋橋筋商店街':'🛍️','道頓堀':'🦀','錦市場':'🍢','宇治老街（抹茶午餐）':'🍵','平等院':'⛩️','任天堂博物館':'🍄','京都寶可夢中心':'⚡','勝尾寺':'🎎','天保山市場 午餐':'🍤','天保山海遊館':'🐋','梅田':'🌃','KKday 一日遊 集合':'🚌','嵐山':'🎋','金閣寺':'🏯','返回大阪':'🚌','難波八阪神社':'🦁','老爺爺蛋糕 難波本店':'🧀','退房、寄放行李':'🧳','難波周邊最後採買':'🛍️','551蓬萊 豚饅 午餐':'🥟','取行李 → 前往關西機場':'✈️'};
-const VER='v9';
+const VER='v12';
+const gq=(q,l)=>`https://www.google.com/search?q=${encodeURIComponent(q)}&tbs=qdr:y${l?'&lr='+l:''}`;
+const FE=[['章魚','🐙'],['大阪燒','🥞'],['蟹','🦀'],['螃蟹','🦀'],['起司','🧀'],['串炸','🍢'],['玉子','🍳'],['甜甜圈','🍩'],['抹茶','🍵'],['湯豆腐','🍲'],['豚饅','🥟'],['肉包','🥟'],['可樂餅','🍘'],['霜淇淋','🍦'],['拉麵','🍜'],['食堂','🏮'],['蛋糕','🍰']];
+const foodEm=x=>{const t=(x.name||'')+(x.dish||'');const m=FE.find(e=>t.includes(e[0]));return m?m[1]:'🍽️'};
 const FOOD0=()=>{let n=0;const IN={"たこ家道頓堀くくる": "道頓堀代表性的章魚燒店，章魚塊大、外酥內軟，常有排隊人潮，可選原味、醬油或蔥花口味。", "美津の（大阪燒）": "道頓堀的大阪燒老字號，招牌是加了山芋的「山芋燒」，口感鬆軟綿密。", "蟹道樂 道頓堀本店": "以大螃蟹招牌聞名的螃蟹料理店，有各式螃蟹套餐，價位偏高，建議先訂位。", "Pablo 起司塔": "半熟起司塔專賣店，現烤的外層酥脆、內餡濃郁，可選原味或季節口味。", "串炸 だるま": "新世界的串炸名店，戴眼鏡大叔看板是招牌，記得串炸醬汁不可二次沾。", "串炸 八重勝": "新世界另一間串炸老店，串炸食材種類多，適合一次嚐鮮。", "錦市場 豆乳甜甜圈": "京都錦市場的排隊小吃，以豆乳製作，口感鬆軟微甜，現炸現吃最好吃。", "三木雞卵（玉子燒）": "錦市場的知名玉子燒，用高湯煎出柔軟濕潤的口感，可站著邊走邊吃。", "中村藤吉 本店": "宇治的抹茶老舖，甜點用自家茶葉製作，假日常大排長龍，建議先抽號碼牌。", "伊藤久右衛門 本店": "宇治茶舖，以抹茶甜點與抹茶料理聞名，可選抹茶パフェ或抹茶蕎麥麵。", "天保山 浪花食堂街": "位在天保山市集內，重現昭和年代的大阪街景，集合大阪燒、章魚燒、炸串，逛完海遊館剛好用餐。", "千房 梅田": "大阪燒的老字號連鎖，可在鐵板前吃到現做的大阪燒，口味選擇多。", "嵐山 街邊小吃": "渡月橋到竹林沿路有炸可樂餅、抹茶霜淇淋等邊走邊吃的小吃，逛街時順便補充體力。", "嵯峨野 湯豆腐": "嵯峨野一帶以湯豆腐聞名，冬天吃特別暖心，套餐以豆腐料理為主，清淡健康。", "老爺爺蛋糕 難波本店": "大阪名物起司蛋糕，口感綿密輕盈，剛出爐時風味最好，建議開店前先排隊。", "551蓬萊 難波": "大阪人氣肉包店，豚饅外皮鬆軟、內餡多汁；依台灣檢疫規定，豬肉製品通常不可攜帶入境，請現場吃完。"};const f=(area,name,dish,price)=>({id:'f'+(n++),area,name,dish,price,intro:IN[name]||'',done:false});return [
 f('D1 道頓堀・心齋橋','たこ家道頓堀くくる','章魚燒 8 顆','約 ¥700–900'),f('D1 道頓堀・心齋橋','美津の（大阪燒）','山芋燒、豚玉','約 ¥1,500–2,500'),
 f('D1 道頓堀・心齋橋','蟹道樂 道頓堀本店','螃蟹套餐','約 ¥5,000–10,000'),f('D1 道頓堀・心齋橋','Pablo 起司塔','現烤起司塔','約 ¥800–1,200'),
@@ -431,8 +435,9 @@ function foodView(){
   h+=`<div class="store ${openS[key]?'open':''}"><div class="sh" data-a="tog" data-v="${esc(key)}"><div class="bdg" style="background:${SC[ai%SC.length]}">${esc(a.slice(0,2))}</div>
   <div class="n">${esc(a.replace(/^D\d\s*/,''))}<small>${a.slice(0,2)}・${its.length} 間</small></div><span class="pill">${d}/${its.length}</span><span class="chev">⌄</span></div>
   <div class="sb">${its.map(({x,i})=>`<div class="it ${x.done?'done':''}"><input type="checkbox" ${x.done?'checked':''} data-a="chk" data-k="food" data-v="${i}">
-   <div style="flex:1;min-width:0"><div class="nm2">${esc(x.name)}</div>${x.intro?`<div class="intro">${esc(x.intro)}</div>`:''}${x.dish?`<div class="sub">必點：${esc(x.dish)}</div>`:''}
-   ${x.price?`<span class="pr pj">${esc(x.price)}</span>`:''}<a class="pr" target="_blank" rel="noopener" href="https://www.google.com/maps/search/${enc(x.name)}">📍 地圖</a><a class="pr pv" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=${enc(x.name+' 美食 vlog')}&sp=EgIIBQ%253D%253D">▶ 影片</a></div>
+   <div class="ph" data-a="openf" data-v="${i}" style="${x.img?'':'background:linear-gradient(135deg,var(--spot),var(--y));font-size:28px'}">${x.img?`<img class="cv" src="${x.img}" alt="">`:foodEm(x)}</div>
+   <div style="flex:1;min-width:0;cursor:pointer" data-a="openf" data-v="${i}"><div class="nm2">${esc(x.name)}</div>${x.intro?`<div class="intro">${esc(x.intro)}</div>`:''}${x.dish?`<div class="sub">必點：${esc(x.dish)}</div>`:''}
+   ${x.price?`<span class="pr pj">${esc(x.price)}</span>`:''}${x.tl?`<span class="pr ps">⭐ Tabelog ${esc(x.tl)}</span>`:''}<span class="pr pv">📖 影片・食記・評比</span></div>
    <button class="x" style="position:static" data-a="delli" data-k="food" data-v="${i}">×</button></div>`).join('')}</div></div>`});
  return h}
 function collView(){
@@ -503,6 +508,25 @@ document.addEventListener('click',e=>{
  else if(a==='addshop')addShop();
  else if(a==='zoom'){const x=S.shop[+v];$('#sheet').innerHTML=`<div class="pane"><h2>${esc(x.text)}</h2><img src="${x.img}" alt="" style="width:100%;border-radius:18px;border:1.5px solid var(--bd)"><div class="btns"><label class="btn p">換照片<input type="file" accept="image/*" hidden data-ph="${v}"></label><button class="btn" data-a="delph" data-v="${v}">刪除照片</button><button class="btn" data-a="close">關閉</button></div></div>`;showSheet()}
  else if(a==='delitph'){if(confirm('確定要刪除這張照片嗎？')){delete S.items[day][+v].img;$('#sheet').classList.remove('show');save()}}
+ else if(a==='openf'){const x=S.food[+v],q=x.name;$('#sheet').innerHTML=`<div class="pane"><div class="cover">${x.img?`<img src="${x.img}" alt="">`:`<span>${foodEm(x)}</span>`}</div>
+  <div class="btns" style="margin:0 0 8px"><label class="btn">📷 ${x.img?'換':'上傳'}照片<input type="file" accept="image/*" hidden data-fph="${v}"></label>${x.img?`<button class="btn" data-a="delfph" data-v="${v}">刪除照片</button>`:''}<a class="btn" target="_blank" rel="noopener" href="https://www.google.com/search?tbm=isch&q=${enc(q+' 料理')}">🔍 網路照片</a></div>
+  <div class="tm sub">🍽️ ${esc(x.area)}</div><h2>${esc(x.name)}</h2>
+  <div class="btns"><a class="btn p" target="_blank" rel="noopener" href="${navURL(x)}">🧭 大眾運輸導航</a><a class="btn b" target="_blank" rel="noopener" href="https://www.google.com/maps/search/${enc(q)}">📍 地圖</a></div>
+  <div class="sec">📖 介紹</div><div class="story">${esc(x.intro||'這是你自己新增的美食，點下方連結查看最新介紹與評價。')}</div>
+  ${x.dish?`<span class="tag tg-menu">必點 ${esc(x.dish)}</span>`:''}${x.price?`<span class="tag tg-tick">價位 ${esc(x.price)}</span>`:''}${x.tl?`<span class="tag tg-eat">⭐ Tabelog ${esc(x.tl)}</span>`:''}
+  <div class="sub">※ 價位為參考，以現場菜單為準</div>
+  <div class="sec">▶ 影片（今年內）</div>
+  <a class="lk" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=${enc(q+' 美食 vlog')}&sp=EgIIBQ%253D%253D">▶ YouTube 美食影片</a>
+  <a class="lk" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=${enc(q+' グルメ')}&sp=EgIIBQ%253D%253D">🇯🇵 YouTube 日文影片</a>
+  <div class="sec">📝 近一年食記文章</div>
+  <a class="lk" target="_blank" rel="noopener" href="${gq(q+' 食記 推薦')}">🔎 中文部落客食記（1 年內）</a>
+  <a class="lk" target="_blank" rel="noopener" href="${gq(q+' 口コミ ブログ','lang_ja')}">🇯🇵 日文部落格評價（1 年內）</a>
+  <div class="sec">⭐ Tabelog 評比</div>
+  <a class="lk" target="_blank" rel="noopener" href="https://tabelog.com/rst/rstsearch?sw=${enc(q)}">🍙 在 Tabelog 搜尋「${esc(q)}」看評分</a>
+  <a class="lk" target="_blank" rel="noopener" href="https://s.tabelog.com/tw/">🌐 Tabelog 台灣版首頁</a>
+  <div class="btns"><button class="btn p" data-a="settl" data-v="${v}">✏️ ${x.tl?'修改':'填寫'} Tabelog 評分</button></div></div>`;showSheet()}
+ else if(a==='settl'){const x=S.food[+v],t=prompt('填入 Tabelog 評分（例：3.58，可留空）',x.tl||'');if(t===null)return;x.tl=t.trim();$('#sheet').classList.remove('show');save()}
+ else if(a==='delfph'){if(confirm('確定要刪除這張照片嗎？')){delete S.food[+v].img;$('#sheet').classList.remove('show');save()}}
  else if(a==='delph'){if(confirm('確定要刪除這張照片嗎？')){delete S.shop[+v].img;$('#sheet').classList.remove('show');save()}}
  else if(a==='addstore'){const t=$('#st-in').value.trim();if(!t||S.stores.includes(t))return;S.stores.push(t);openS[t]=true;save()}
  else if(a==='delstore'){const st=S.stores[+v];if(confirm('刪除「'+st+'」和裡面所有商品？')){S.shop=S.shop.filter(x=>x.store!==st);S.stores.splice(+v,1);save()}}
@@ -516,6 +540,7 @@ async function addShop(){const t=$('#s-name').value.trim();if(!t)return;const f=
  const x={id:Date.now()+'',store:st,text:t,jp:$('#s-jp').value,tw:$('#s-tw').value,prev:$('#s-prev').value.trim(),done:false,c:0};if(f){const m=await squeeze(f);if(m)x.img=m}
  openS[st]=true;S.shop.push(x);save()}
 document.addEventListener('change',async e=>{const t=e.target;
+ if(t.dataset&&t.dataset.fph!==undefined&&t.files[0]){const m=await squeeze(t.files[0]);const it=S.food[+t.dataset.fph];if(m&&it){it.img=m;$('#sheet').classList.remove('show');save()}return}
  if(t.dataset&&t.dataset.itph!==undefined&&t.files[0]){const m=await squeeze(t.files[0]);const it=S.items[day][+t.dataset.itph];if(m&&it){it.img=m;$('#sheet').classList.remove('show');save()}return}
 if(t.dataset&&t.dataset.ph!==undefined&&t.files[0]){const m=await squeeze(t.files[0]);if(m&&S.shop[+t.dataset.ph]){S.shop[+t.dataset.ph].img=m;$('#sheet').classList.remove('show');save()}}});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='n-in')document.querySelector('[data-a=addli]')?.click()});
