@@ -191,7 +191,7 @@ const ITIN0=()=>{_i=0;return {
  J('food','12:45','551蓬萊 豚饅 午餐','551蓬萊 難波','現場吃完，不要帶走','45 分','難波站周邊分店',{story:'大阪靈魂小吃。依台灣檢疫規定，日本豬肉製品通常不可攜帶入境，請現場吃完。',eat:['豚饅'],menu:['豚まん','焼売'],ticket:'約 ¥500–1,000'}),
  J('transit','14:30','取行李 → 前往關西機場','南海 難波駅','18:30 起飛，建議 15:30 前到機場','車程約 40 分','南海電鐵難波站 → 關西機場，預留退稅與報到時間',{story:'國際線建議起飛前約 3 小時抵達。'})]}};
 const EM={'關西機場（抵達）':'✈️','飯店放行李':'🏨','丸美衣料 太子店':'👗','通天閣・新世界':'🗼','阿倍野展望台（HARUKAS 300）':'🌇','心齋橋筋商店街':'🛍️','道頓堀':'🦀','錦市場':'🍢','宇治老街（抹茶午餐）':'🍵','平等院':'⛩️','任天堂博物館':'🍄','京都寶可夢中心':'⚡','勝尾寺':'🎎','天保山市場 午餐':'🍤','天保山海遊館':'🐋','梅田':'🌃','KKday 一日遊 集合':'🚌','嵐山':'🎋','金閣寺':'🏯','返回大阪':'🚌','難波八阪神社':'🦁','老爺爺蛋糕 難波本店':'🧀','退房、寄放行李':'🧳','難波周邊最後採買':'🛍️','551蓬萊 豚饅 午餐':'🥟','取行李 → 前往關西機場':'✈️'};
-const VER='v12';
+const VER='v15';
 const gq=(q,l)=>`https://www.google.com/search?q=${encodeURIComponent(q)}&tbs=qdr:y${l?'&lr='+l:''}`;
 const FE=[['章魚','🐙'],['大阪燒','🥞'],['蟹','🦀'],['螃蟹','🦀'],['起司','🧀'],['串炸','🍢'],['玉子','🍳'],['甜甜圈','🍩'],['抹茶','🍵'],['湯豆腐','🍲'],['豚饅','🥟'],['肉包','🥟'],['可樂餅','🍘'],['霜淇淋','🍦'],['拉麵','🍜'],['食堂','🏮'],['蛋糕','🍰']];
 const foodEm=x=>{const t=(x.name||'')+(x.dish||'');const m=FE.find(e=>t.includes(e[0]));return m?m[1]:'🍽️'};
@@ -210,6 +210,265 @@ c('shrine','錦天滿宮','D2 錦市場東端','御朱印以現場為準',''),c(
 c('shrine','勝尾寺','D3 箕面','拜觀 ¥500、御朱印以現場為準','勝運達摩'),c('shrine','野宮神社','D4 嵐山竹林旁','御守以現場為準','良緣御守'),
 c('shrine','金閣寺（鹿苑寺）','D4 京都','御朱印以現場為準','限定御守'),
 c('coin','通天閣','D1 新世界','每枚約 ¥200–500（依機台）',N),c('coin','任天堂博物館','D2 宇治','以現場為準',N),c('coin','海遊館','D3 天保山','每枚約 ¥200–500（依機台）',N),c('coin','金閣寺','D4 京都','以現場為準',N)]};
+const HIST_RAW=`#2024-08|0.225
+0824|可爾必思(1瓶)|全家|162|8
+0824|可爾必思(1瓶)|7-11|138|8
+0824|LION 休足時間|未註明(現金)|709|10
+0825|不二家水蜜桃飲料(1瓶)|未註明(現金)|150|8
+0827|不二家水蜜桃飲料(1瓶)|未註明(現金)|140|8
+#2025-04|0.232
+0416|UNIQLO EZY褲|UNIQLO|2990|10
+0418|UNIQLO 發熱衣(¥1990款)|UNIQLO|1990|10
+0418|UNIQLO 短袖發熱衣|UNIQLO|1290|10
+0418|UNIQLO 涼感衣(¥1290款)|UNIQLO|1290|10
+0418|UNIQLO AIRism T恤/涼感衣(¥990款)|UNIQLO|990|10
+0418|UNIQLO 發熱衣(¥1990款)|UNIQLO|1990|10
+0418|寶可夢 沐浴球|寶可夢中心|715|10
+0418|吉伊卡娃 紗布巾|PARCO|880|10
+0416|養樂多Y1000(1瓶)|LIFE超市|162|8
+0417|養樂多Y1000(1瓶)|全家|162|8
+0417|便利商店奶昔(¥330級)|7-11|330.48|8
+0417|消疲勞/消水腫疲勞飲料(1瓶)|7-11|170.64|8
+0417|不二家水蜜桃飲料(1瓶)|投幣式販賣機|120|8
+0419|可爾必思(1瓶)|動物園|160|8
+0418|老爺爺滾珠瓶|唐吉訶德|1999|0
+0418|起司干貝(規格未記)|唐吉訶德|3990|0
+0418|梅子(唐吉訶德)|唐吉訶德|999|0
+0418|燒帆立貝|唐吉訶德|4999|0
+0418|大粒帆貝|唐吉訶德|1999|0
+0418|驅蚊神器|大國藥妝|1080|0
+0418|防蚊掛片|大國藥妝|1480|0
+0418|防蚊液/噴液(¥980款)|大國藥妝|980|0
+0418|寶可夢防蚊貼|大國藥妝|498|0
+0418|足貼(¥578款)|大國藥妝|578|0
+0418|貼布 DK藍|大國藥妝|2180|0
+0418|LOXONIN 紅貼布|大國藥妝|1580|0
+0418|樂敦眼藥水(一般)|大國藥妝|598|0
+0418|大正口內膏|大國藥妝|880|0
+0418|角色OK繃(大國)|大國藥妝|298|0
+0418|日東紅茶 皇家奶茶(8入)|大國藥妝|298|0
+0418|艾草足貼 2入|大國藥妝|217.5|0
+0419|艾草足貼 30入|大國藥妝|1780|0
+0419|足貼(蒸氣)|大國藥妝|798|0
+0419|眼膜|大國藥妝|800|0
+0419|杏仁小魚乾|大國藥妝|1280|0
+0419|POCKY 巧克力|大國藥妝|198|0
+0419|POCKY 草莓|大國藥妝|198|0
+0418|YUSKIN 乳霜(整罐)|鶴羽藥妝|1288|0
+0418|YUSKIN 補充包|鶴羽藥妝|1012|0
+0418|痠痛藥膏(擦的)|鶴羽藥妝|1249|0
+0418|獅王 衣物污漬清潔|鶴羽藥妝|731|0
+0418|防蚊止癢(擦蚊子)|鶴羽藥妝|458|0
+0418|擦痘痘藥|鶴羽藥妝|1453|0
+0418|防曬乳(逢姊)|鶴羽藥妝|2099|0
+0418|速攻藍莓(護眼)|鶴羽藥妝|1001|0
+0418|高絲 定妝噴霧|鶴羽藥妝|2400|0
+0420|薯條三兄弟(原味)|關西機場免稅商店|1130|0
+0420|薯條三兄弟(扇貝)|關西機場免稅商店|1130|0
+0420|薯條三兄弟(地瓜)|關西機場免稅商店|1150|0
+0420|東京牛奶餅乾(規格未記)|關西機場免稅商店|3600|0
+0420|薯條三兄弟(玉米濃湯)|關西機場|1040|8
+#2025-12|0.203
+1222|御菓子御殿 紫薯塔|御菓子御殿|162|8
+1222|御菓子御殿 紫薯牛奶包|御菓子御殿|140|8
+1222|便利商店奶昔(¥330級)|便利商店|330.48|8
+1222|消疲勞/消水腫疲勞飲料(1瓶)|便利商店|189|8
+1222|養樂多Y1000(1瓶)|超市|162|8
+1223|金桔檸檬原汁|古宇利海洋塔|1809|8
+1223|鳳梨巧克力(盒裝)|古宇利海洋塔|885.6|8
+1223|鳳梨巧克力(袋裝)|古宇利海洋塔|486|8
+1223|海鹽餅乾(小盒)|古宇利海洋塔|464.4|8
+1223|海鹽餅乾(大盒)|古宇利海洋塔|1328.4|8
+1223|美麗海 紙膠帶|美麗海|330|10
+1223|美麗海 餅乾|美麗海|1350|8
+1223|UNIQLO 混羊毛極暖發熱衣|UNIQLO|2290|10
+1223|UNIQLO BlockTech外套|UNIQLO|3990|10
+1223|消疲勞/消水腫疲勞飲料(1瓶)|7-11|189|8
+1223|雪肌粹(7-11)|7-11|700|8
+1223|合利他命(單瓶均價)|唐吉訶德|5760|0
+1223|EVE 頭痛藥|唐吉訶德|1326.67|0
+1223|雪的上(紅)|唐吉訶德|3600|0
+1223|大正感冒藥(粉)|唐吉訶德|1580|0
+1223|酷涼止癢液(1入)|唐吉訶德|598|0
+1224|UNIQLO UT T恤(¥990款)|UNIQLO|990|10
+1224|UNIQLO 羽絨輕量背心|UNIQLO|2990|10
+1224|UNIQLO AIRism棉質圓領T恤|UNIQLO|1990|10
+1224|UNIQLO UT T恤(¥1500款)|UNIQLO|1500|10
+1224|UNIQLO 混羊毛極暖發熱衣|UNIQLO|2290|10
+1224|UNIQLO 盒裝極級暖發熱衣|UNIQLO|2990|10
+1224|UNIQLO 羽絨輕量外套|UNIQLO|5990|10
+1224|GU 外套(品項未詳)|GU|5446|10
+1224|寶可夢盒玩(噴火龍)|寶可夢中心|970|0
+1224|寶可夢盒玩(¥1250款)|寶可夢中心|1250|0
+1224|寶可夢限定徽章|寶可夢中心|700|0
+1224|風速狗娃娃|寶可夢中心|4500|0
+1224|寶可夢盒玩(燈)|寶可夢中心|1200|0
+1224|LOFT 蜜粉|LOFT|982|10
+1224|健榮 漱口水 120ml|大國藥妝|1080|0
+1224|健榮 漱口水 50ml|大國藥妝|548|0
+1224|小林 喉嚨噴霧(大國)|大國藥妝|858|0
+1224|雪的上(紅)|大國藥妝|3600|0
+1224|樂敦眼藥水(一般)|大國藥妝|598|0
+1224|鼻孔擴張貼|大國藥妝|598|0
+1224|痘痘藥|大國藥妝|798|0
+1224|佳麗寶 防曬乳|大國藥妝|2100|0
+1224|日東紅茶 皇家奶茶(8入)|大國藥妝|320|0
+1224|波照間 純黑糖(盒裝)|超市|354.24|8
+1224|Bisco 夾心餅乾|超市|170.64|8
+1224|UHA 味覺糖|超市|138.24|8
+1224|自然派 昆布粉|超市|397.44|8
+1224|養樂多Y1000(1瓶)|超市|162|8
+1224|明治 牛奶|超市|246.24|8
+1225|UNIQLO 襪子|UNIQLO|390|10
+1225|UNIQLO UT T恤(¥990款)|UNIQLO|990|10
+1225|UNIQLO UT T恤(長袖款)|UNIQLO|1290|10
+1225|UNIQLO AIRism棉質圓領T恤|UNIQLO|1990|10
+1225|無印 衣物壓縮袋|無印良品|790|10
+1225|無印 長袖衣服|無印良品|1990|10
+1225|無印 卸妝棉|無印良品|299|10
+1225|瑪利歐鑰匙圈|任天堂|396|10
+1225|星之卡比積木|任天堂|770|10
+1225|邊銀食堂 辣油|未註明店家|1078|8
+1225|海帶芽(沖繩)|未註明店家|982|8
+1225|POCKY 杏仁巧克力|超市|213.84|8
+1225|蝦餅|超市|756|8
+1225|休足美人 大片|唐吉訶德|499|0
+1225|休足美人|唐吉訶德|598|0
+1225|小林 退熱貼(成人)|唐吉訶德|428|0
+1225|健榮 喉嚨噴霧 50ml|唐吉訶德|1880|0
+1225|健榮 喉嚨噴霧 30ml|唐吉訶德|698|0
+1225|兒童止癢液|唐吉訶德|898|0
+1225|足湯入浴劑|唐吉訶德|598|0
+1225|口內炎軟膏|唐吉訶德|888|0
+1225|LION 休足時間|唐吉訶德|748|0
+1225|大耳狗 吸水巾|唐吉訶德|1300|0
+1225|星之卡比吊飾|唐吉訶德|800|0
+1225|奧特曼軟膠公仔|唐吉訶德|700|0
+1225|沖繩青檸糖|唐吉訶德|238|0
+1225|海帶芽(沖繩)|唐吉訶德|900|0
+1225|UHA 味覺糖|唐吉訶德|128|0
+1225|Orion 花生豆(5入)|唐吉訶德|398|0
+1225|嗨啾軟糖|唐吉訶德|168|0
+1226|休足時間(顆粒款)|札幌藥妝|767|10
+1226|明治 葡萄軟糖(小包裝)|札幌藥妝|483|8
+1226|吉伊卡娃 軟糖|札幌藥妝|224|8
+1226|瀏海梳|Bic Camera|4500|10
+1226|玩具車(Bic)|Bic Camera|405|10
+1226|DMM水族館 餅乾|DMM水族館|640|8
+1226|御菓子御殿 紅芋地瓜饅頭|御菓子御殿|1512|8
+#2026-06|0.2007
+0606|GU W棉色休閒套裝|GU|1290|10
+0606|GU 棉混紡睡衣|GU|2490|10
+0606|GU 圖形T恤|GU|1490|10
+0606|GU 雙羅紋圓領T恤|GU|990|10
+0606|養樂多Y1000(1瓶)|全家|162|8
+0606|UHA 味覺糖|全家|159.84|8
+0607|卡比獸 爆米花桶|寶可夢(新宿)|4500|10
+0607|皮卡丘 鑰匙圈|寶可夢(新宿)|1800|10
+0607|伊布 鑰匙圈|寶可夢(新宿)|1800|10
+0607|寶可夢 徽章球|寶可夢(新宿)|1200|10
+0608|UNIQLO AIRism T恤/涼感衣(¥990款)|UNIQLO|990|10
+0608|UNIQLO UT T恤(¥990款)|UNIQLO|990|10
+0608|UNIQLO 防曬外套|UNIQLO|1990|10
+0608|UNIQLO 短袖發熱衣|UNIQLO|1290|10
+0608|UNIQLO 喀什米爾發熱衣|UNIQLO|2290|10
+0608|消疲勞/消水腫疲勞飲料(1瓶)|全家|189|8
+0609|大正感冒藥(粉)|唐吉訶德|1430|0
+0609|酷涼止癢液(1入)|唐吉訶德|599|0
+0609|老爺爺滾珠瓶|唐吉訶德|2390|0
+0609|雪的上(紅)|唐吉訶德|3600|0
+0609|雪的上(黑金版)|唐吉訶德|4520|0
+0609|Moist Diane 乾洗髮|唐吉訶德|880|0
+0609|Momori 乾洗髮|唐吉訶德|900|0
+0609|伊右衛門 濃抹茶粉|唐吉訶德|299|0
+0609|PREMIUM 鳳梨軟糖|唐吉訶德|498|0
+0609|超司干貝(小)|唐吉訶德|1190|0
+0609|醬油生蛋拌飯醬(8入)|唐吉訶德|599|0
+0609|POCKY 薄荷巧克力|唐吉訶德|229|0
+0609|POCKY 椰子巧克力|唐吉訶德|229|0
+0609|POCKY 杏仁巧克力|唐吉訶德|199|0
+0609|PREMIUM 濃厚葡萄軟糖|唐吉訶德|199|0
+0609|貓咪大戰爭 洗澡球|唐吉訶德|500|0
+0609|吉伊卡娃 軟膠公仔|唐吉訶德|100|0
+0609|吉伊卡娃 包頭髮巾|唐吉訶德|1000|0
+0609|大耳狗 髮夾|唐吉訶德|500|0
+0610|寶可夢 皮卡丘坐姿絨娃娃|澀谷寶可夢中心|1650|10
+0610|寶可夢盒玩(雕像龍屬性系列)|澀谷寶可夢中心|1320|10
+0610|寶可夢盒玩(裝飾相框系列)|澀谷寶可夢中心|1430|10
+0610|寶可夢球絨毛娃娃|澀谷寶可夢中心|1210|10
+0610|卡比獸 護照套|澀谷寶可夢中心|1320|10
+0610|耿鬼 護照套|澀谷寶可夢中心|1320|10
+0610|寶可夢卡牌(單包)|澀谷寶可夢中心|200|10
+0610|無印 短袖|無印良品|900|10
+0610|Hisamitsu 酸痛貼布 小判50入|Bic Camera|3300|0
+0610|Hisamitsu 酸痛貼布 大判20入|Bic Camera|2640|0
+0610|指甲修護軟膏|Bic Camera|1000|0
+0610|樂敦眼藥水(史萊姆造型)|Bic Camera|650|0
+0610|米奇米妮 防蚊手環|Bic Camera|699|0
+0610|兒童牙刷|Bic Camera|380|0
+0610|東京泡芙餅乾|大國藥妝|550|0
+0610|白杏仁巧克力球|大國藥妝|1680|0
+0610|晴空塔烤巧克力蛋糕|大國藥妝|1300|0
+0610|日東紅茶 皇家奶茶(8入)|大國藥妝|298|0
+0610|黑雷神巧克力|大國藥妝|178|0
+0610|壽司DIY糖果玩具|大國藥妝|278|0
+0610|芒果嗨啾|大國藥妝|148|0
+0610|防蚊液/噴液(¥980款)|大國藥妝|980|0
+0610|LION 休足時間|大國藥妝|798|0
+0610|池田模範堂 麵包超人止咳糖漿|大國藥妝|980|0
+0610|LION 兒童BUFFERIN止咳糖漿|大國藥妝|798|0
+0610|大正感冒藥(粉)|大國藥妝|1278|0
+0610|角色OK繃(大國)|大國藥妝|298|0
+0610|樂敦眼藥水(一般)|大國藥妝|648|0
+0610|皮卡丘牙刷|大國藥妝|248|0
+0610|大正口內膏|大國藥妝|880|0
+0610|小林 眼鏡擦拭清潔片|大國藥妝|458|0
+0610|貓咪貼紙|大國藥妝|500|0
+0611|水獺造型餅乾|水族館|540|8
+0611|水獺巧克力麻糬|水族館|486|8
+0611|無印 鞋子泡泡乾洗劑|無印良品|790|10
+0611|3COINS 蔬果手動攪拌器|3COINS|500|0
+0611|3COINS 木質海綿架|3COINS|700|0
+0611|3COINS 自動壓縮機|3COINS|1000|0
+0611|3COINS 折疊口袋椅|3COINS|800|0
+0611|3COINS 梳子|3COINS|500|0
+0611|3COINS 自動壓縮袋(3入)|3COINS|300|0
+0611|3COINS 噴霧油罐|3COINS|500|0
+0611|3COINS 轉印貼紙|3COINS|500|0
+0611|吉伊卡娃 小八娃娃|吉伊卡哇商店|2530|10
+0611|吉伊卡娃 盒玩(零錢包)|吉伊卡哇商店|990|10
+0611|吉伊卡娃 盒玩(啤酒)|吉伊卡哇商店|1320|10
+0611|吉伊卡娃 盒玩(壽司)|吉伊卡哇商店|1650|10
+0611|卡比之星 迷你積木|LABI山田電機|539|0
+0611|寶可夢 御三家(初代)|LABI山田電機|1501|0
+0611|Tomica 小汽車|LABI山田電機|1001|0
+0611|皮卡丘公仔|LABI山田電機|547|0
+0611|寶可夢 御三家|LABI山田電機|1501|0
+0611|四驅車軌道車|LABI山田電機|770|0
+0611|海賊王一番賞(1抽)|LABI山田電機|718|0
+0612|哭哭富士山娃娃吊飾(大)|富士山伴手禮店|880|10
+0612|哭哭富士山娃娃吊飾(小)|富士山伴手禮店|660|10
+0612|搞笑肌肉男富士山吊飾|富士山伴手禮店|660|10
+0612|富士山夜光吊飾|富士山伴手禮店|610|10
+0612|絕望富士山公仔吊飾|富士山伴手禮店|660|10
+0612|富士山磁鐵|富士山伴手禮店|660|10
+0612|UNIQLO 棉質寬版5分袖|UNIQLO|1290|10
+0612|UNIQLO UT 小丸子T恤|UNIQLO|1990|10
+0612|UNIQLO UT T恤(¥990款)|UNIQLO|990|10
+0612|消疲勞/消水腫疲勞飲料(1瓶)|全家|189|8
+0612|養樂多Y1000(1瓶)|全家|162|8
+0613|薯條三兄弟(扇貝)|成田機場|1122|8
+0613|薯條三兄弟(原味)|成田機場|1122|8
+0613|抹茶夾心餅乾(10入)|成田機場|1400|8
+0613|東京牛奶餅乾(18入)|成田機場|2400|8
+0613|薯條三兄弟(毛豆)|成田機場|746|8
+0613|薯條三兄弟(奶油)|成田機場|1000|8
+0613|NY起司餅乾|成田機場|1800|8`;
+const HIST0=()=>{let y='',r=.21,n=0;const o=[];HIST_RAW.trim().split('\n').forEach(l=>{if(l[0]==='#'){const a=l.slice(1).split('|');y=a[0].slice(0,4);r=+a[1];return}const a=l.split('|');n++;o.push({id:'J'+String(n).padStart(3,'0'),d:y+'-'+a[0].slice(0,2)+'-'+a[0].slice(2),n:a[1],q:1,c:'JPY',p:a[2],pr:+a[3],t:+a[4],r})});return o};
+const hk=x=>x.t===8?1.08:x.t===10?1.1:1;
+function hcalc(x){const ex=x.pr/hk(x),q=x.q>0?x.q:1,rate=x.c==='TWD'?1:(x.r||RATE);return{ex,rate,total:ex*rate,unit:ex*rate/q}}
+function histGroups(){const m={};S.hist.forEach(x=>{const k=x.n.trim().toLowerCase();(m[k]=m[k]||[]).push(x)});
+ return Object.values(m).map(a=>{a.sort((p,q)=>q.d.localeCompare(p.d));const min=a.reduce((b,x)=>hcalc(x).unit<hcalc(b).unit?x:b,a[0]);return{a,min,name:a[0].n}}).sort((p,q)=>q.a[0].d.localeCompare(p.a[0].d))}
 const SEED=()=>({
 items:ITIN0(),iv:3,
 pack:[...PREP0(),...PACK0()],v:3,
@@ -219,7 +478,7 @@ exp:[],line:''});
 
 /* ============ 狀態與同步 ============ */
 const $=s=>document.querySelector(s);
-let conn=false,ready=false,lastSync='',shadow={},openS={},S=null,tab='trip',day=0,ref=null,online=false;
+let hq='',shopMode='list',conn=false,ready=false,lastSync='',shadow={},openS={},S=null,tab='trip',day=0,ref=null,online=false;
 const LKEY='osaka-kyoto-trip';
 const room=new URLSearchParams(location.search).get('room')||'trip-k7m2x9';
 const arr=v=>v?Object.values(v):[];
@@ -231,13 +490,15 @@ function norm(s){s=s||SEED();s.items=s.items||{};for(let i=0;i<5;i++)s.items[i]=
  if(!(s.fv>=1)){s.food=arr(s.food);if(!s.food.length)s.food=FOOD0();s.coll=arr(s.coll);if(!s.coll.length)s.coll=COLL0();s.fv=1}
  if(!(s.fv>=2)){const m=Object.fromEntries(FOOD0().map(x=>[x.name,x.intro]));s.food=s.food.map(x=>({...x,intro:x.intro||m[x.name]||''}));s.fv=2}
  s.food=arr(s.food);s.coll=arr(s.coll);
+ if(!(s.hv>=1)){s.hist=arr(s.hist);if(!s.hist.length)s.hist=HIST0();s.hv=1}
+ s.hist=arr(s.hist);
  if(!(s.iv>=3)){const N=ITIN0();for(let d=0;d<5;d++){const keep=s.items[d].filter(x=>!OLDN.has(x.name)&&!/^[ij]\d+$/.test(x.id));s.items[d]=[...N[d],...keep].sort((a,b)=>a.time.localeCompare(b.time))}s.iv=3}
  if(!(s.v>=2)){s.pack=s.pack.filter(x=>!/^p[0-5]$/.test(x.id));const hv=new Set(s.pack.map(x=>x.text));PACK0().forEach(x=>{if(!hv.has(x.text))s.pack.push(x)});
   const hp=new Set(s.prep.map(x=>x.text));PREP0().forEach(x=>{if(!hp.has(x.text))s.prep.push(x)});s.v=2}
  if(s.v<3){const ids=new Set(s.pack.map(x=>x.id));s.pack=[...s.prep.map(x=>({...x,g:'行前準備'})).filter(x=>!ids.has(x.id)),...s.pack];s.prep=[];s.v=3}
  s.pack=s.pack.map(x=>({g:'其他用品',...x}));
  s.stores=s.stores===undefined?['Cezanne','Canmake','3Coins','藥妝店','伴手禮','其他']:arr(s.stores);
- s.shop=s.shop.map(x=>({jp:'',tw:'',prev:'',...x,store:x.store||'其他'}));
+ s.shop=s.shop.map(x=>({jp:'',tw:'',prev:'',jt:'ex10',qty:1,...x,store:x.store||'其他'}));
  s.shop.forEach(x=>{if(!s.stores.includes(x.store))s.stores.push(x.store)});
  Object.values(s.items).forEach(a=>a.forEach(x=>{if(!x.tr&&TR[x.name])x.tr=TR[x.name]}));return s}
 const clean=o=>JSON.parse(JSON.stringify(o));
@@ -250,7 +511,7 @@ function save(){
  R()}
 function apply(v){S=norm(v);shadow=flat(clean(S));ready=true;lastSync=new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit',hour12:false});
  localStorage.setItem(LKEY+room,JSON.stringify(S));
- if(!(v.v>=3&&v.iv>=3&&v.fv>=2))ref.set(clean(S));
+ if(!(v.v>=3&&v.iv>=3&&v.fv>=2&&v.hv>=1))ref.set(clean(S));
  if(!(document.activeElement&&document.activeElement.tagName==='INPUT'))R()}
 function boot(){
  const local=localStorage.getItem(LKEY+room);S=norm(local?JSON.parse(local):null);
@@ -274,7 +535,7 @@ function R(){
  if(!online)h+=`<div class="banner">目前是「單機模式」，資料只存在這支手機。填入 Firebase 設定後，知道連結的人就能即時同步。</div>`;
  if(tab==='trip')h+=tripView();
  else if(tab==='exp')h+=expView();
- else if(tab==='shop')h+=shopView();
+ else if(tab==='shop')h+=segBar()+(shopMode==='hist'?histView():shopView());
  else if(tab==='food')h+=foodView();
  else if(tab==='coll')h+=collView();
  else h+=(tab==='pack'?hotelView():'')+listView(tab);
@@ -361,40 +622,74 @@ function listView(k){
  return h}
 const SC=['#fde0e4','#f6d5ec','#d5e3fb','#d5f0dc','#fff1c9','#e5dcf7'];
 const RATE=0.21;
+const TXL={ex10:['未稅 10%',10,0],in10:['含稅 10%',10,1],ex8:['未稅 8%（食品）',8,0],in8:['含稅 8%（食品）',8,1]};
+function taxOf(x){const t=TXL[x.jt]||TXL.ex10,r=t[1],p=(+x.jp||0)*(+x.qty||1),ex=t[2]?p/(1+r/100):p;return{ex,inc:ex*(1+r/100),r}}
+const netOf=x=>{const t=taxOf(x);return S.refund!==false?t.ex:t.inc};
 function shopView(){
- const done=S.shop.filter(x=>x.done).length;
- const left=S.shop.filter(x=>!x.done).reduce((a,x)=>a+(+x.jp||0),0);
- const opts=S.stores.map(s=>`<option>${esc(s)}</option>`).join('');
- let h=`<div class="sec" style="font-size:17px">🛍️ 購物清單（${done}/${S.shop.length}）</div>
- <div class="sub">還沒買的日幣預算：<b>¥${left.toLocaleString()}</b>（約 NT$ ${Math.round(left*RATE).toLocaleString()}）</div>
+ const done=S.shop.filter(x=>x.done).length,ref=S.refund!==false,unb=S.shop.filter(x=>!x.done);
+ const HG=histGroups(),hh=t=>{t=(t||'').trim().toLowerCase();if(t.length<2)return'';const g=HG.find(g=>g.name.toLowerCase().includes(t));if(!g)return'';return `<span class="pr pv" data-a="hjump" data-v="${esc(g.name)}">📈 歷史最低 NT$${Math.round(hcalc(g.min).unit)}・${esc(g.min.p||'')}</span>`};
+ const pay=unb.reduce((a,x)=>a+taxOf(x).inc,0),aft=unb.reduce((a,x)=>a+taxOf(x).ex,0),Y=n=>'¥'+Math.round(n).toLocaleString(),T=n=>'NT$ '+Math.round(n*RATE).toLocaleString();
+ const opts=S.stores.map(s=>`<option>${esc(s)}</option>`).join(''),txo=Object.entries(TXL).map(([k,t])=>`<option value="${k}">${t[0]}</option>`).join('');
+ let h=`<div class="sec big">🛍️ 購物清單（${done}/${S.shop.length}）</div>
+ <div class="hero" style="margin:8px 4px 8px 0"><div class="sub">還沒買的預算（日圓）</div>
+  <div class="hl">先付含稅 <b>${Y(pay)}</b>　<span class="sub">約 ${T(pay)}</span></div>
+  <div class="hl">${ref?`退稅後約 <b>${Y(aft)}</b>　<span class="sub">約 ${T(aft)}</span>`:'<span class="sub">目前未計入退稅</span>'}</div>
+  <label class="mc"><input type="checkbox" ${ref?'checked':''} data-a="trf"> 預估會辦理退稅</label>
+  <details class="tips"><summary>🧾 2026/11 起日本新退稅制</summary><ul>
+   <li>改為「先付後退」：結帳先付含稅價（一般 10%、食品 8%），出境時經海關確認商品帶出日本後才退稅。</li>
+   <li>同一店家、同一天，未稅合計滿 <b>¥5,000</b> 才能退稅；一般物品與消耗品可合併計算。</li>
+   <li>購買日起 <b>90 天內</b>，在機場或港口的退稅確認機辦理。</li>
+   <li>退稅商品在出境確認前不要拆封使用，也先不要放進託運行李。12/20 18:30 起飛，請在託運行李前先辦完，預留時間。</li>
+   <li>部分退稅業者可能收手續費，實際退稅金額以店家為準。</li></ul>
+   <div class="btns"><a class="btn" target="_blank" rel="noopener" href="https://osaka-info.jp/zh-Hant-TW/news/tax_refund_information/">大阪觀光局說明</a><a class="btn b" target="_blank" rel="noopener" href="https://claude.ai/artifact/2yUXdekkPDRsgiUmy1gn4B">📊 舊版比價表（Google）</a></div></details></div>
  <div class="frm"><label>新增商品</label>
   <div class="in"><select id="s-store">${opts}</select></div>
   <div class="in"><input id="s-name" placeholder="商品名稱"></div>
+  <div class="in"><input id="s-jp" type="number" inputmode="decimal" placeholder="日本標價 ¥（單價）"><input id="s-tw" type="number" inputmode="numeric" placeholder="台灣 NT$（選填）"></div>
+  <div class="in"><select id="s-jt">${txo}</select><input id="s-qty" type="number" inputmode="numeric" placeholder="數量" value="1" style="max-width:90px"></div>
   <div class="in"><input id="s-prev" placeholder="之前買多少錢（選填，例：¥800 或 NT$350）"></div>
   <div class="in"><label style="flex:0 0 auto;align-self:center">📷 照片（選填）</label><input id="s-ph" type="file" accept="image/*"></div>
-  <div class="in"><input id="s-jp" type="number" inputmode="numeric" placeholder="日本 ¥"><input id="s-tw" type="number" inputmode="numeric" placeholder="台灣 NT$（選填）"></div>
-  <div class="in"><button class="btn p" data-a="addshop" style="flex:1;border:2.5px solid var(--ink)">加入購物清單</button></div></div>`;
+  <div class="in"><button class="btn p" data-a="addshop" style="flex:1">加入購物清單</button></div></div>`;
  S.stores.forEach((st,si)=>{
   const its=S.shop.map((x,i)=>({x,i})).filter(o=>o.x.store===st),d=its.filter(o=>o.x.done).length;
+  const exs=its.reduce((a,o)=>a+taxOf(o.x).ex,0),rf=its.reduce((a,o)=>a+taxOf(o.x).inc-taxOf(o.x).ex,0),any=its.some(o=>+o.x.jp);
   h+=`<div class="store ${openS[st]?'open':''}"><div class="sh" data-a="tog" data-v="${esc(st)}">
    <div class="bdg" style="background:${SC[si%SC.length]}">${esc(st.slice(0,2))}</div>
    <div class="n">${esc(st)}<small>${its.length} 項</small></div><span class="pill">${d}/${its.length}</span><span class="chev">⌄</span></div>
    <div class="sb"><a class="map" target="_blank" rel="noopener" href="https://www.google.com/maps/search/${enc(st+' 大阪 京都')}">📍 Google 地圖</a>
+   ${any?`<div class="sub" style="margin:0 0 8px">此店預估未稅合計 <b>${Y(exs)}</b>・退稅門檻 ¥5,000：${exs>=5000?'✅ 已達標，預估可退 '+Y(rf):'還差 '+Y(5000-exs)}</div>`:''}
    ${its.length?its.map(({x,i})=>{
-    const sv=(+x.jp&&+x.tw)?Math.round(+x.tw-x.jp*RATE):null;
+    const t=taxOf(x),q=+x.qty||1,sv=(+x.jp&&+x.tw)?Math.round(+x.tw*q-netOf(x)*RATE):null;
     return `<div class="it ${x.done?'done':''}"><input type="checkbox" ${x.done?'checked':''} data-a="chk" data-k="shop" data-v="${i}">
     ${x.img?`<img class="ph" data-a="zoom" data-v="${i}" src="${x.img}" alt="">`:`<label class="ph">📷<input type="file" accept="image/*" hidden data-ph="${i}"></label>`}
     <div style="flex:1;min-width:0"><div class="nm2" style="color:${PAL[x.c||0]}">${esc(x.text)}</div>
-    ${x.jp?`<span class="pr pj" data-a="editp" data-v="${i}">日本 ¥${(+x.jp).toLocaleString()}</span>`:''}
+    ${x.jp?`<span class="pr pj" data-a="editp" data-v="${i}">日本標價 ¥${(+x.jp).toLocaleString()}${q>1?' × '+q:''}（${(TXL[x.jt]||TXL.ex10)[0]}）</span><span class="pr" data-a="editp" data-v="${i}">含稅 ${Y(t.inc)}</span><span class="pr pt" data-a="editp" data-v="${i}">${ref?'退稅後':'實付'} ${Y(netOf(x))}・約 ${T(netOf(x))}</span>`:''}
     ${x.tw?`<span class="pr pt" data-a="editp" data-v="${i}">台灣 NT$${(+x.tw).toLocaleString()}</span>`:''}
-    ${sv!==null?`<span class="pr ${sv>0?'ps':''}">${sv>0?'日本省 NT$'+sv.toLocaleString():'台灣較便宜'}</span>`:''}
-    ${x.prev?`<span class="pr" data-a="editp" data-v="${i}">📌 之前買 ${esc(x.prev)}</span>`:''}${(!x.jp&&!x.tw)?`<span class="pr" data-a="editp" data-v="${i}">＋填價格</span>`:''}</div>
+    ${sv!==null?`<span class="pr ${sv>0?'ps':''}">${sv>0?'日本省 NT$'+sv.toLocaleString()+(ref?'（含退稅）':''):'台灣較便宜'}</span>`:''}
+    ${hh(x.text)}${x.prev?`<span class="pr" data-a="editp" data-v="${i}">📌 之前買 ${esc(x.prev)}</span>`:''}${(!x.jp&&!x.tw)?`<span class="pr" data-a="editp" data-v="${i}">＋填價格</span>`:''}</div>
     <button class="dot" style="background:${PAL[x.c||0]}" data-a="col" data-k="shop" data-v="${i}" aria-label="換字體顏色"></button>
     <button class="x" style="position:static" data-a="edit" data-k="shop" data-v="${i}" aria-label="編輯">✏️</button><button class="x" style="position:static" data-a="delli" data-k="shop" data-v="${i}">×</button></div>`}).join(''):'<div class="sub">這家店還沒有商品</div>'}
    <button class="btn" data-a="delstore" data-v="${si}" style="margin-top:6px">刪除此店家</button></div></div>`});
  return h+`<div class="in"><input id="st-in" placeholder="新增店家，例：Daiso"><button class="btn p" data-a="addstore">新增店家</button></div>`;
 }
 const CAT=[['餐飲','🍜','#ffd48a'],['交通','🚃','#bcd6ff'],['購物','🛍️','#ffc4cf'],['住宿','🏨','#d4f0dc'],['門票','🎫','#e6d9fa'],['其他','✨','#fff1c9']];
+function segBar(){return `<div class="btns" style="margin:6px 0 4px"><button class="btn ${shopMode==='list'?'p':''}" data-a="smode" data-v="list">🛍️ 購物清單</button><button class="btn ${shopMode==='hist'?'p':''}" data-a="smode" data-v="hist">📈 比價紀錄（${S.hist.length}）</button></div>`}
+const hinc=x=>x.t?x.pr:x.pr*1.1,hfy=(x,n)=>x.c==='TWD'?'NT$'+Math.round(n*10)/10:'¥'+Math.round(n).toLocaleString();
+function hlist(){const q=hq.trim().toLowerCase(),G=histGroups().filter(g=>!q||g.a.some(x=>(x.n+(x.p||'')).toLowerCase().includes(q)));
+ if(!G.length)return '<div class="sub" style="text-align:center;padding:20px">沒有符合的紀錄</div>';
+ return G.slice(0,q?200:60).map(g=>{const key='h:'+g.name.trim().toLowerCase(),c=hcalc(g.min),lc=hcalc(g.a[0]),diff=g.a.length>1&&c.unit>0?Math.round((lc.unit/c.unit-1)*100):null;
+  return `<div class="store ${openS[key]?'open':''}"><div class="sh" data-a="tog" data-v="${esc(key)}"><div class="bdg" style="background:var(--spot)">🛍️</div>
+  <div class="n">${esc(g.name)}<small>最低 未稅 ${hfy(g.min,c.ex)}｜含稅${g.min.t?'':'≈'} ${hfy(g.min,hinc(g.min))}</small><small>未稅台幣單價 NT$${c.unit.toFixed(1)}・${esc(g.min.p||'未填地點')}</small></div><span class="pill">${g.a.length}</span><span class="chev">⌄</span></div>
+  <div class="sb">${diff!==null?`<div class="sub" style="margin-bottom:6px">最近一次${diff>0?'比最低貴 '+diff+'%':'已是最低'}</div>`:''}
+  ${g.a.map(x=>{const k=hcalc(x),f=n=>x.c==='TWD'?'NT$'+Math.round(n*10)/10:'¥'+Math.round(n).toLocaleString(),isMin=x===g.min&&g.a.length>1;
+   return `<div class="it" style="${isMin?'border-color:#2f9e63':''}"><div style="flex:1;min-width:0"><div class="nm2">${esc(x.d)}・${esc(x.p||'未填地點')}${isMin?' <span class="pr ps">最低</span>':''}</div>
+   <div class="sub">標價 ${f(x.pr)}（${x.t?'含稅'+x.t+'%':'未稅'}）${x.q>1?' × '+x.q:''}</div><div class="sub">未稅 <b>${f(k.ex)}</b>｜含稅${x.t?'':'≈'} <b>${f(hinc(x))}</b></div><span class="pr pt">未稅台幣單價 NT$${k.unit.toFixed(1)}</span></div>
+   <button class="x" style="position:static" data-a="hdel" data-v="${x.id}">×</button></div>`}).join('')}</div></div>`}).join('')+(!q&&histGroups().length>60?'<div class="sub" style="text-align:center">只顯示最近 60 項，其他請用搜尋</div>':'')}
+function histView(){return `<div class="sec big">📈 比價紀錄</div><div class="sub">比價一律用「未稅台幣單價」（含稅價依 10% 或 8% 還原）；標「≈」的含稅價是未稅商品以 10% 估算，食品實際為 8%。資料已從你的 Google 試算表搬進來，會同步給旅伴。</div>
+ <div class="in"><input id="h-q" placeholder="搜尋商品或地點…" value="${esc(hq)}" oninput="hq=this.value;document.querySelector('#h-list').innerHTML=hlist()"><button class="btn p" data-a="hadd">＋ 新增</button></div><div id="h-list">${hlist()}</div>`}
+function hprev(){const p=parseFloat($('#h-pr').value),el=$('#h-pv');if(!p){el.textContent='輸入價格後會顯示換算結果';return}
+ const x={pr:p,t:+$('#h-t').value,q:+$('#h-q2').value||1,c:$('#h-c').value,r:+$('#h-r').value||RATE},k=hcalc(x),u=x.c==='TWD'?'NT$':'¥',r1=n=>Math.round(n*10)/10;
+ el.innerHTML=`未稅價 <b>${u}${r1(k.ex)}</b>　未稅台幣總價 <b>NT$${r1(k.total)}</b>　未稅台幣單價 <b>NT$${r1(k.unit)}</b>`}
 function settle(){const M=S.members,bal={},paid={},owe={};M.forEach(m=>{bal[m]=0;paid[m]=0;owe[m]=0});
  S.exp.forEach(x=>{const a=+x.amt||0,sp=(x.split&&x.split.length?x.split:M).filter(m=>m in bal);if(!sp.length)return;const sh=a/sp.length;
   if(x.payer in bal){paid[x.payer]+=a;bal[x.payer]+=a}sp.forEach(m=>{owe[m]+=sh;bal[m]-=sh})});
@@ -504,6 +799,20 @@ document.addEventListener('click',e=>{
  else if(a==='spall'||a==='spnone'){document.querySelectorAll('.sp').forEach(i=>i.checked=a==='spall')}
  else if(a==='addfood'){const n=$('#f-n').value.trim();if(!n)return;let ar=$('#f-a').value;if(ar==='__new'){ar=(prompt('新區域名稱（例：D3 梅田）')||'').trim();if(!ar)return}openS['f:'+ar]=true;S.food.push({id:Date.now()+'',area:ar,name:n,dish:$('#f-d').value.trim(),price:$('#f-p').value.trim(),intro:$('#f-i').value.trim(),done:false});save()}
  else if(a==='addcoll'){const n=$('#c-n').value.trim();if(!n)return;S.coll.push({id:Date.now()+'',kind:$('#c-k').value,name:n,place:$('#c-p').value.trim(),price:$('#c-m').value.trim(),note:'',done:false});save()}
+ else if(a==='smode'){shopMode=v;R()}
+ else if(a==='hjump'){shopMode='hist';hq=v;openS['h:'+v.trim().toLowerCase()]=true;R()}
+ else if(a==='hadd'){const nm=[...new Set(S.hist.map(x=>x.n))].map(n=>`<option value="${esc(n)}">`).join(''),pl=[...new Set(S.hist.map(x=>x.p).filter(Boolean))].map(n=>`<option value="${esc(n)}">`).join('');
+  $('#sheet').innerHTML=`<div class="pane"><h2>新增購買紀錄</h2>
+  <label>商品名稱（同名稱會歸在一起比價）</label><input id="h-n" list="h-nl"><datalist id="h-nl">${nm}</datalist>
+  <div class="in"><div style="flex:1"><label>幣別</label><select id="h-c" oninput="hprev()"><option>JPY</option><option>TWD</option></select></div><div style="flex:1"><label>價格（原幣）</label><input id="h-pr" type="number" inputmode="decimal" oninput="hprev()"></div></div>
+  <div class="in"><div style="flex:1"><label>稅別</label><select id="h-t" oninput="hprev()"><option value="0">未稅</option><option value="10">含稅 10%</option><option value="8">含稅 8%（食品）</option></select></div><div style="flex:1"><label>數量（入數）</label><input id="h-q2" type="number" value="1" min="1" oninput="hprev()"></div></div>
+  <div class="in"><div style="flex:1"><label>購買地點</label><input id="h-p" list="h-pl"><datalist id="h-pl">${pl}</datalist></div><div style="flex:1"><label>購買日期</label><input id="h-d" type="date" value="${new Date().toISOString().slice(0,10)}"></div></div>
+  <label>匯率（日幣→台幣）</label><input id="h-r" type="number" step="0.0001" value="${RATE}" oninput="hprev()">
+  <div class="story" id="h-pv" style="margin-top:8px">輸入價格後會顯示換算結果</div>
+  <div class="btns"><button class="btn p" data-a="hrec">儲存</button><button class="btn" data-a="close">取消</button></div></div>`;showSheet()}
+ else if(a==='hrec'){const n=$('#h-n').value.trim(),pr=parseFloat($('#h-pr').value),d=$('#h-d').value;if(!n||!(pr>=0)||$('#h-pr').value===''){alert('請填寫商品名稱與價格');return}if(!d){alert('請選擇購買日期');return}
+  S.hist.push({id:'W'+Date.now().toString(36),d,n,q:+$('#h-q2').value||1,c:$('#h-c').value,p:$('#h-p').value.trim(),pr,t:+$('#h-t').value,r:+$('#h-r').value||RATE});$('#sheet').classList.remove('show');save()}
+ else if(a==='hdel'){const i=S.hist.findIndex(x=>x.id===v);if(i<0)return;const x=S.hist[i];if(confirm('確定要刪除「'+x.n+'」在 '+(x.p||'未填地點')+' 的購買紀錄嗎？')){S.hist.splice(i,1);save()}}
  else if(a==='tog'){openS[v]=!openS[v];R()}
  else if(a==='addshop')addShop();
  else if(a==='zoom'){const x=S.shop[+v];$('#sheet').innerHTML=`<div class="pane"><h2>${esc(x.text)}</h2><img src="${x.img}" alt="" style="width:100%;border-radius:18px;border:1.5px solid var(--bd)"><div class="btns"><label class="btn p">換照片<input type="file" accept="image/*" hidden data-ph="${v}"></label><button class="btn" data-a="delph" data-v="${v}">刪除照片</button><button class="btn" data-a="close">關閉</button></div></div>`;showSheet()}
@@ -511,7 +820,7 @@ document.addEventListener('click',e=>{
  else if(a==='openf'){const x=S.food[+v],q=x.name;$('#sheet').innerHTML=`<div class="pane"><div class="cover">${x.img?`<img src="${x.img}" alt="">`:`<span>${foodEm(x)}</span>`}</div>
   <div class="btns" style="margin:0 0 8px"><label class="btn">📷 ${x.img?'換':'上傳'}照片<input type="file" accept="image/*" hidden data-fph="${v}"></label>${x.img?`<button class="btn" data-a="delfph" data-v="${v}">刪除照片</button>`:''}<a class="btn" target="_blank" rel="noopener" href="https://www.google.com/search?tbm=isch&q=${enc(q+' 料理')}">🔍 網路照片</a></div>
   <div class="tm sub">🍽️ ${esc(x.area)}</div><h2>${esc(x.name)}</h2>
-  <div class="btns"><a class="btn p" target="_blank" rel="noopener" href="${navURL(x)}">🧭 大眾運輸導航</a><a class="btn b" target="_blank" rel="noopener" href="https://www.google.com/maps/search/${enc(q)}">📍 地圖</a></div>
+  <div class="btns"><a class="btn p" target="_blank" rel="noopener" href="https://www.google.com/maps/search/${enc(q)}">📍 地圖</a></div>
   <div class="sec">📖 介紹</div><div class="story">${esc(x.intro||'這是你自己新增的美食，點下方連結查看最新介紹與評價。')}</div>
   ${x.dish?`<span class="tag tg-menu">必點 ${esc(x.dish)}</span>`:''}${x.price?`<span class="tag tg-tick">價位 ${esc(x.price)}</span>`:''}${x.tl?`<span class="tag tg-eat">⭐ Tabelog ${esc(x.tl)}</span>`:''}
   <div class="sub">※ 價位為參考，以現場菜單為準</div>
@@ -530,14 +839,22 @@ document.addEventListener('click',e=>{
  else if(a==='delph'){if(confirm('確定要刪除這張照片嗎？')){delete S.shop[+v].img;$('#sheet').classList.remove('show');save()}}
  else if(a==='addstore'){const t=$('#st-in').value.trim();if(!t||S.stores.includes(t))return;S.stores.push(t);openS[t]=true;save()}
  else if(a==='delstore'){const st=S.stores[+v];if(confirm('刪除「'+st+'」和裡面所有商品？')){S.shop=S.shop.filter(x=>x.store!==st);S.stores.splice(+v,1);save()}}
- else if(a==='editp'){const x=S.shop[+v],j=prompt('日本價格（¥）',x.jp||'');if(j===null)return;const t=prompt('台灣價格（NT$，可留空）',x.tw||'');if(t===null)return;const pv=prompt('之前買的金額（可留空，例：¥800 或 NT$350）',x.prev||'');if(pv===null)return;x.jp=j.replace(/\D/g,'');x.tw=t.replace(/\D/g,'');x.prev=pv.trim();save()}
+ else if(a==='editp'){const x=S.shop[+v];$('#sheet').innerHTML=`<div class="pane"><h2>${esc(x.text)}</h2>
+  <label>日本標價（¥，單價）</label><input id="e-jp" type="number" inputmode="decimal" value="${esc(x.jp||'')}">
+  <label>價格標示</label><select id="e-jt">${Object.entries(TXL).map(([k,t])=>`<option value="${k}" ${k===(x.jt||'ex10')?'selected':''}>${t[0]}</option>`).join('')}</select>
+  <label>數量</label><input id="e-qty" type="number" inputmode="numeric" value="${x.qty||1}">
+  <label>台灣價格（NT$，單價，選填）</label><input id="e-tw" type="number" inputmode="numeric" value="${esc(x.tw||'')}">
+  <label>之前買的金額（選填）</label><input id="e-prev" value="${esc(x.prev||'')}">
+  <div class="btns"><button class="btn p" data-a="saveshop" data-v="${v}">儲存</button><button class="btn" data-a="close">取消</button></div></div>`;showSheet()}
+ else if(a==='saveshop'){const x=S.shop[+v];x.jp=$('#e-jp').value.replace(/[^\d.]/g,'');x.jt=$('#e-jt').value;x.qty=Math.max(1,+$('#e-qty').value||1);x.tw=$('#e-tw').value.replace(/[^\d.]/g,'');x.prev=$('#e-prev').value.trim();$('#sheet').classList.remove('show');save()}
+ else if(a==='trf'){S.refund=(S.refund===false);save()}
  else if(a==='saveline'){S.line=$('#l-in').value.trim();save()}
  else if(a==='share'){e.preventDefault();navigator.clipboard?.writeText(location.href);alert('已複製！傳給旅伴就能一起編輯')}
 });
 function showSheet(){const s=$('#sheet'),p=s.querySelector&&s.querySelector('.pane');if(p&&!p.querySelector('.xc'))p.insertAdjacentHTML('afterbegin','<button class="xc" data-a="close" aria-label="關閉">✕</button>');s.classList.add('show')}
 function squeeze(f){return new Promise(r=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,600/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.6))};im.onerror=()=>r('');im.src=u})}
 async function addShop(){const t=$('#s-name').value.trim();if(!t)return;const f=$('#s-ph').files[0],st=$('#s-store').value;
- const x={id:Date.now()+'',store:st,text:t,jp:$('#s-jp').value,tw:$('#s-tw').value,prev:$('#s-prev').value.trim(),done:false,c:0};if(f){const m=await squeeze(f);if(m)x.img=m}
+ const x={id:Date.now()+'',store:st,text:t,jp:$('#s-jp').value,tw:$('#s-tw').value,jt:$('#s-jt').value,qty:Math.max(1,+$('#s-qty').value||1),prev:$('#s-prev').value.trim(),done:false,c:0};if(f){const m=await squeeze(f);if(m)x.img=m}
  openS[st]=true;S.shop.push(x);save()}
 document.addEventListener('change',async e=>{const t=e.target;
  if(t.dataset&&t.dataset.fph!==undefined&&t.files[0]){const m=await squeeze(t.files[0]);const it=S.food[+t.dataset.fph];if(m&&it){it.img=m;$('#sheet').classList.remove('show');save()}return}
