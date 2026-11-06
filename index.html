@@ -60,8 +60,8 @@ input,select{font:inherit;font-weight:600;font-size:15px;border:3px solid var(--
 .bdg{flex:0 0 auto;width:46px;height:46px;border-radius:14px;border:3px solid var(--ink);display:grid;place-items:center;font-weight:800}
 .sh .n{flex:1;min-width:0;font-weight:800;font-size:18px}.sh .n small{display:block;font-weight:600;color:var(--sub);font-size:12px}
 .pill{border:2.5px solid var(--ink);background:#fff1c9;border-radius:14px;padding:0 10px;font-weight:800;font-size:14px}
-.sb{display:none;border-top:3px solid var(--ink);background:var(--bg);padding:12px}.store.open .sb{display:block}
-.store.open .chev{transform:rotate(180deg)}.chev{transition:transform .2s;font-weight:800}
+.sb{display:none;border-top:3px solid var(--ink);background:var(--bg);padding:12px}.store.open>.sb{display:block}
+.store.open>.sh .chev{transform:rotate(180deg)}.chev{transition:transform .2s;font-weight:800}
 .map{display:block;text-align:center;border:3px solid var(--ink);background:var(--tran);border-radius:16px;padding:8px;color:var(--ink);text-decoration:none;font-weight:800;margin-bottom:10px;box-shadow:0 3px 0 var(--ink)}
 .it{display:flex;gap:10px;align-items:flex-start;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:10px;margin:8px 0}
 .it.done .nm2{text-decoration:line-through;opacity:.5}.nm2{font-weight:800;word-break:break-word}
@@ -117,6 +117,7 @@ nav{border-bottom:1.5px solid var(--bd);box-shadow:0 8px 16px -14px rgba(91,67,5
 .xc{position:sticky;top:0;float:right;z-index:3;width:36px;height:36px;margin:-6px -6px 0 8px;border-radius:50%;border:1.5px solid var(--bd);background:var(--card);color:var(--ink);font:inherit;font-size:16px;line-height:1;cursor:pointer;box-shadow:var(--sd)}
 .intro{font-size:13px;margin:3px 0}.pv{background:#ffd9d9}
 .ph{overflow:hidden}
+.sb .store{box-shadow:none;margin:8px 0;border-width:1.5px}
 </style>
 </head>
 <body>
@@ -191,7 +192,7 @@ const ITIN0=()=>{_i=0;return {
  J('food','12:45','551蓬萊 豚饅 午餐','551蓬萊 難波','現場吃完，不要帶走','45 分','難波站周邊分店',{story:'大阪靈魂小吃。依台灣檢疫規定，日本豬肉製品通常不可攜帶入境，請現場吃完。',eat:['豚饅'],menu:['豚まん','焼売'],ticket:'約 ¥500–1,000'}),
  J('transit','14:30','取行李 → 前往關西機場','南海 難波駅','18:30 起飛，建議 15:30 前到機場','車程約 40 分','南海電鐵難波站 → 關西機場，預留退稅與報到時間',{story:'國際線建議起飛前約 3 小時抵達。'})]}};
 const EM={'關西機場（抵達）':'✈️','飯店放行李':'🏨','丸美衣料 太子店':'👗','通天閣・新世界':'🗼','阿倍野展望台（HARUKAS 300）':'🌇','心齋橋筋商店街':'🛍️','道頓堀':'🦀','錦市場':'🍢','宇治老街（抹茶午餐）':'🍵','平等院':'⛩️','任天堂博物館':'🍄','京都寶可夢中心':'⚡','勝尾寺':'🎎','天保山市場 午餐':'🍤','天保山海遊館':'🐋','梅田':'🌃','KKday 一日遊 集合':'🚌','嵐山':'🎋','金閣寺':'🏯','返回大阪':'🚌','難波八阪神社':'🦁','老爺爺蛋糕 難波本店':'🧀','退房、寄放行李':'🧳','難波周邊最後採買':'🛍️','551蓬萊 豚饅 午餐':'🥟','取行李 → 前往關西機場':'✈️'};
-const VER='v15';
+const VER='v16';
 const gq=(q,l)=>`https://www.google.com/search?q=${encodeURIComponent(q)}&tbs=qdr:y${l?'&lr='+l:''}`;
 const FE=[['章魚','🐙'],['大阪燒','🥞'],['蟹','🦀'],['螃蟹','🦀'],['起司','🧀'],['串炸','🍢'],['玉子','🍳'],['甜甜圈','🍩'],['抹茶','🍵'],['湯豆腐','🍲'],['豚饅','🥟'],['肉包','🥟'],['可樂餅','🍘'],['霜淇淋','🍦'],['拉麵','🍜'],['食堂','🏮'],['蛋糕','🍰']];
 const foodEm=x=>{const t=(x.name||'')+(x.dish||'');const m=FE.find(e=>t.includes(e[0]));return m?m[1]:'🍽️'};
@@ -478,7 +479,7 @@ exp:[],line:''});
 
 /* ============ 狀態與同步 ============ */
 const $=s=>document.querySelector(s);
-let hq='',shopMode='list',conn=false,ready=false,lastSync='',shadow={},openS={},S=null,tab='trip',day=0,ref=null,online=false;
+let hcat='all',hq='',shopMode='list',conn=false,ready=false,lastSync='',shadow={},openS={},S=null,tab='trip',day=0,ref=null,online=false;
 const LKEY='osaka-kyoto-trip';
 const room=new URLSearchParams(location.search).get('room')||'trip-k7m2x9';
 const arr=v=>v?Object.values(v):[];
@@ -492,6 +493,7 @@ function norm(s){s=s||SEED();s.items=s.items||{};for(let i=0;i<5;i++)s.items[i]=
  s.food=arr(s.food);s.coll=arr(s.coll);
  if(!(s.hv>=1)){s.hist=arr(s.hist);if(!s.hist.length)s.hist=HIST0();s.hv=1}
  s.hist=arr(s.hist);
+ if(!(s.hv>=2)){s.hist=s.hist.map(x=>({...x,cat:x.cat||hclass(x)}));s.hv=2}
  if(!(s.iv>=3)){const N=ITIN0();for(let d=0;d<5;d++){const keep=s.items[d].filter(x=>!OLDN.has(x.name)&&!/^[ij]\d+$/.test(x.id));s.items[d]=[...N[d],...keep].sort((a,b)=>a.time.localeCompare(b.time))}s.iv=3}
  if(!(s.v>=2)){s.pack=s.pack.filter(x=>!/^p[0-5]$/.test(x.id));const hv=new Set(s.pack.map(x=>x.text));PACK0().forEach(x=>{if(!hv.has(x.text))s.pack.push(x)});
   const hp=new Set(s.prep.map(x=>x.text));PREP0().forEach(x=>{if(!hp.has(x.text))s.prep.push(x)});s.v=2}
@@ -511,7 +513,7 @@ function save(){
  R()}
 function apply(v){S=norm(v);shadow=flat(clean(S));ready=true;lastSync=new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit',hour12:false});
  localStorage.setItem(LKEY+room,JSON.stringify(S));
- if(!(v.v>=3&&v.iv>=3&&v.fv>=2&&v.hv>=1))ref.set(clean(S));
+ if(!(v.v>=3&&v.iv>=3&&v.fv>=2&&v.hv>=2))ref.set(clean(S));
  if(!(document.activeElement&&document.activeElement.tagName==='INPUT'))R()}
 function boot(){
  const local=localStorage.getItem(LKEY+room);S=norm(local?JSON.parse(local):null);
@@ -674,19 +676,34 @@ function shopView(){
 }
 const CAT=[['餐飲','🍜','#ffd48a'],['交通','🚃','#bcd6ff'],['購物','🛍️','#ffc4cf'],['住宿','🏨','#d4f0dc'],['門票','🎫','#e6d9fa'],['其他','✨','#fff1c9']];
 function segBar(){return `<div class="btns" style="margin:6px 0 4px"><button class="btn ${shopMode==='list'?'p':''}" data-a="smode" data-v="list">🛍️ 購物清單</button><button class="btn ${shopMode==='hist'?'p':''}" data-a="smode" data-v="hist">📈 比價紀錄（${S.hist.length}）</button></div>`}
+const HC=[['food','🍱','食品零食'],['drug','💊','藥妝美妝'],['conv','🏪','超商・超市'],['cloth','👕','服飾'],['toy','🧸','玩具・周邊'],['life','🏠','生活雜貨'],['other','✨','其他']];
+function hclass(x){const n=x.n||'',p=x.p||'';
+ if(/全家|7-11|便利商店|超市|投幣式販賣機/.test(p))return'conv';
+ if(/^UNIQLO|^GU(\s|$)|發熱衣|T恤|外套|襪子|長袖|短袖|睡衣|背心|EZY褲|套裝|5分袖/.test(n))return'cloth';
+ if(/防蚊|驅蚊|藥|貼布|眼藥|喉嚨|止癢|口內|OK繃|足貼|休足|牙刷|漱口|防曬|乳霜|眼膜|蜜粉|定妝|乾洗髮|感冒|頭痛|痘|合利他命|雪的上|鼻孔|退熱|入浴|軟膏|止咳|YUSKIN|LOXONIN|護眼|擦拭|污漬|雪肌粹/.test(n))return'drug';
+ if(/餅乾|巧克力|糖|茶|牛奶|飲料|辣油|海帶芽|帆貝|干貝|帆立|梅子|小魚乾|POCKY|薯條|蛋糕|麻糬|黑糖|昆布|蝦餅|拌飯|紫薯|地瓜|饅頭|起司|檸檬|原汁|花生|奶昔|嗨啾|可爾必思|養樂多|御菓子|泡芙|抹茶/.test(n))return'food';
+ if(/3COINS|無印|壓縮|梳|海綿|攪拌|噴霧油罐|卸妝棉|紙膠帶/.test(n+p))return'life';
+ if(/寶可夢|吉伊卡娃|卡比|大耳狗|瑪利歐|奧特曼|貓咪|富士山|公仔|盒玩|鑰匙圈|吊飾|娃娃|積木|Tomica|四驅|一番賞|玩具|小八|徽章|護照套|洗澡球|沐浴球|紗布巾|髮夾|爆米花桶|貼紙|磁鐵|絨毛|卡牌|包頭髮巾/.test(n))return'toy';
+ if(/藥妝/.test(p))return'drug';return'other'}
 const hinc=x=>x.t?x.pr:x.pr*1.1,hfy=(x,n)=>x.c==='TWD'?'NT$'+Math.round(n*10)/10:'¥'+Math.round(n).toLocaleString();
-function hlist(){const q=hq.trim().toLowerCase(),G=histGroups().filter(g=>!q||g.a.some(x=>(x.n+(x.p||'')).toLowerCase().includes(q)));
- if(!G.length)return '<div class="sub" style="text-align:center;padding:20px">沒有符合的紀錄</div>';
- return G.slice(0,q?200:60).map(g=>{const key='h:'+g.name.trim().toLowerCase(),c=hcalc(g.min),lc=hcalc(g.a[0]),diff=g.a.length>1&&c.unit>0?Math.round((lc.unit/c.unit-1)*100):null;
-  return `<div class="store ${openS[key]?'open':''}"><div class="sh" data-a="tog" data-v="${esc(key)}"><div class="bdg" style="background:var(--spot)">🛍️</div>
+function hcard(g){const key='h:'+g.name.trim().toLowerCase(),c=hcalc(g.min),lc=hcalc(g.a[0]),diff=g.a.length>1&&c.unit>0?Math.round((lc.unit/c.unit-1)*100):null,ck=g.a[0].cat||'other',cl=HC.find(x=>x[0]===ck)||HC[6];
+ return `<div class="store ${openS[key]?'open':''}"><div class="sh" data-a="tog" data-v="${esc(key)}"><div class="bdg" style="background:var(--spot)">${cl[1]}</div>
   <div class="n">${esc(g.name)}<small>最低 未稅 ${hfy(g.min,c.ex)}｜含稅${g.min.t?'':'≈'} ${hfy(g.min,hinc(g.min))}</small><small>未稅台幣單價 NT$${c.unit.toFixed(1)}・${esc(g.min.p||'未填地點')}</small></div><span class="pill">${g.a.length}</span><span class="chev">⌄</span></div>
   <div class="sb">${diff!==null?`<div class="sub" style="margin-bottom:6px">最近一次${diff>0?'比最低貴 '+diff+'%':'已是最低'}</div>`:''}
   ${g.a.map(x=>{const k=hcalc(x),f=n=>x.c==='TWD'?'NT$'+Math.round(n*10)/10:'¥'+Math.round(n).toLocaleString(),isMin=x===g.min&&g.a.length>1;
    return `<div class="it" style="${isMin?'border-color:#2f9e63':''}"><div style="flex:1;min-width:0"><div class="nm2">${esc(x.d)}・${esc(x.p||'未填地點')}${isMin?' <span class="pr ps">最低</span>':''}</div>
    <div class="sub">標價 ${f(x.pr)}（${x.t?'含稅'+x.t+'%':'未稅'}）${x.q>1?' × '+x.q:''}</div><div class="sub">未稅 <b>${f(k.ex)}</b>｜含稅${x.t?'':'≈'} <b>${f(hinc(x))}</b></div><span class="pr pt">未稅台幣單價 NT$${k.unit.toFixed(1)}</span></div>
-   <button class="x" style="position:static" data-a="hdel" data-v="${x.id}">×</button></div>`}).join('')}</div></div>`}).join('')+(!q&&histGroups().length>60?'<div class="sub" style="text-align:center">只顯示最近 60 項，其他請用搜尋</div>':'')}
-function histView(){return `<div class="sec big">📈 比價紀錄</div><div class="sub">比價一律用「未稅台幣單價」（含稅價依 10% 或 8% 還原）；標「≈」的含稅價是未稅商品以 10% 估算，食品實際為 8%。資料已從你的 Google 試算表搬進來，會同步給旅伴。</div>
- <div class="in"><input id="h-q" placeholder="搜尋商品或地點…" value="${esc(hq)}" oninput="hq=this.value;document.querySelector('#h-list').innerHTML=hlist()"><button class="btn p" data-a="hadd">＋ 新增</button></div><div id="h-list">${hlist()}</div>`}
+   <button class="x" style="position:static" data-a="hdel" data-v="${x.id}">×</button></div>`}).join('')}
+  <button class="btn" data-a="hcatset" data-v="${esc(g.name)}">🏷️ 改分類（${cl[1]} ${cl[2]}）</button></div></div>`}
+function hlist(){const q=hq.trim().toLowerCase(),all=histGroups().filter(g=>!q||g.a.some(x=>(x.n+(x.p||'')).toLowerCase().includes(q))),cat=g=>g.a[0].cat||'other',E='<div class="sub" style="text-align:center;padding:20px">沒有符合的紀錄</div>';
+ if(!all.length)return E;
+ if(hcat!=='all')return all.filter(g=>cat(g)===hcat).map(hcard).join('')||E;
+ return HC.map(([k,e,t])=>{const gs=all.filter(g=>cat(g)===k);if(!gs.length)return'';const key='hc:'+k;
+  return `<div class="store ${q||openS[key]?'open':''}"><div class="sh" data-a="tog" data-v="${key}"><div class="bdg" style="background:var(--spot)">${e}</div><div class="n">${t}<small>${gs.length} 種商品</small></div><span class="pill">${gs.length}</span><span class="chev">⌄</span></div><div class="sb">${gs.map(hcard).join('')}</div></div>`}).join('')}
+function hchips(){const cnt={},G=histGroups();G.forEach(g=>{const k=g.a[0].cat||'other';cnt[k]=(cnt[k]||0)+1});
+ return `<div class="days" style="padding:4px 4px 8px 0"><button class="chip ${hcat==='all'?'on':''}" data-a="hc" data-v="all"><b>📚</b>全部 ${G.length}</button>${HC.map(([k,e,t])=>`<button class="chip ${hcat===k?'on':''}" data-a="hc" data-v="${k}"><b>${e}</b>${t.slice(0,4)} ${cnt[k]||0}</button>`).join('')}</div>`}
+function histView(){return `<div class="sec big">📈 比價紀錄</div><div class="sub">比價一律用「未稅台幣單價」（含稅價依 10% 或 8% 還原）；標「≈」的含稅價是未稅商品以 10% 估算，食品實際為 8%。資料會同步給旅伴。</div>
+ <div class="in"><input id="h-q" placeholder="搜尋商品或地點…" value="${esc(hq)}" oninput="hq=this.value;document.querySelector('#h-list').innerHTML=hlist()"><button class="btn p" data-a="hadd">＋ 新增</button></div>${hchips()}<div id="h-list">${hlist()}</div>`}
 function hprev(){const p=parseFloat($('#h-pr').value),el=$('#h-pv');if(!p){el.textContent='輸入價格後會顯示換算結果';return}
  const x={pr:p,t:+$('#h-t').value,q:+$('#h-q2').value||1,c:$('#h-c').value,r:+$('#h-r').value||RATE},k=hcalc(x),u=x.c==='TWD'?'NT$':'¥',r1=n=>Math.round(n*10)/10;
  el.innerHTML=`未稅價 <b>${u}${r1(k.ex)}</b>　未稅台幣總價 <b>NT$${r1(k.total)}</b>　未稅台幣單價 <b>NT$${r1(k.unit)}</b>`}
@@ -799,19 +816,24 @@ document.addEventListener('click',e=>{
  else if(a==='spall'||a==='spnone'){document.querySelectorAll('.sp').forEach(i=>i.checked=a==='spall')}
  else if(a==='addfood'){const n=$('#f-n').value.trim();if(!n)return;let ar=$('#f-a').value;if(ar==='__new'){ar=(prompt('新區域名稱（例：D3 梅田）')||'').trim();if(!ar)return}openS['f:'+ar]=true;S.food.push({id:Date.now()+'',area:ar,name:n,dish:$('#f-d').value.trim(),price:$('#f-p').value.trim(),intro:$('#f-i').value.trim(),done:false});save()}
  else if(a==='addcoll'){const n=$('#c-n').value.trim();if(!n)return;S.coll.push({id:Date.now()+'',kind:$('#c-k').value,name:n,place:$('#c-p').value.trim(),price:$('#c-m').value.trim(),note:'',done:false});save()}
+ else if(a==='hc'){hcat=v;R()}
+ else if(a==='hcatset'){$('#sheet').innerHTML=`<div class="pane"><h2>改分類</h2><div class="sub">${esc(v)}（這個商品的所有紀錄都會一起改）</div><label>分類</label><select id="h-ck">${HC.map(c=>`<option value="${c[0]}">${c[1]} ${c[2]}</option>`).join('')}</select>
+  <div class="btns"><button class="btn p" data-a="hcatsave" data-v="${esc(v)}">儲存</button><button class="btn" data-a="close">取消</button></div></div>`;showSheet()}
+ else if(a==='hcatsave'){const k=$('#h-ck').value,nm=v.trim().toLowerCase();S.hist.forEach(x=>{if(x.n.trim().toLowerCase()===nm)x.cat=k});$('#sheet').classList.remove('show');save()}
  else if(a==='smode'){shopMode=v;R()}
- else if(a==='hjump'){shopMode='hist';hq=v;openS['h:'+v.trim().toLowerCase()]=true;R()}
+ else if(a==='hjump'){shopMode='hist';hq=v;hcat='all';openS['h:'+v.trim().toLowerCase()]=true;R()}
  else if(a==='hadd'){const nm=[...new Set(S.hist.map(x=>x.n))].map(n=>`<option value="${esc(n)}">`).join(''),pl=[...new Set(S.hist.map(x=>x.p).filter(Boolean))].map(n=>`<option value="${esc(n)}">`).join('');
   $('#sheet').innerHTML=`<div class="pane"><h2>新增購買紀錄</h2>
   <label>商品名稱（同名稱會歸在一起比價）</label><input id="h-n" list="h-nl"><datalist id="h-nl">${nm}</datalist>
   <div class="in"><div style="flex:1"><label>幣別</label><select id="h-c" oninput="hprev()"><option>JPY</option><option>TWD</option></select></div><div style="flex:1"><label>價格（原幣）</label><input id="h-pr" type="number" inputmode="decimal" oninput="hprev()"></div></div>
   <div class="in"><div style="flex:1"><label>稅別</label><select id="h-t" oninput="hprev()"><option value="0">未稅</option><option value="10">含稅 10%</option><option value="8">含稅 8%（食品）</option></select></div><div style="flex:1"><label>數量（入數）</label><input id="h-q2" type="number" value="1" min="1" oninput="hprev()"></div></div>
   <div class="in"><div style="flex:1"><label>購買地點</label><input id="h-p" list="h-pl"><datalist id="h-pl">${pl}</datalist></div><div style="flex:1"><label>購買日期</label><input id="h-d" type="date" value="${new Date().toISOString().slice(0,10)}"></div></div>
+  <label>分類</label><select id="h-cat"><option value="">自動判斷</option>${HC.map(c=>`<option value="${c[0]}">${c[1]} ${c[2]}</option>`).join('')}</select>
   <label>匯率（日幣→台幣）</label><input id="h-r" type="number" step="0.0001" value="${RATE}" oninput="hprev()">
   <div class="story" id="h-pv" style="margin-top:8px">輸入價格後會顯示換算結果</div>
   <div class="btns"><button class="btn p" data-a="hrec">儲存</button><button class="btn" data-a="close">取消</button></div></div>`;showSheet()}
  else if(a==='hrec'){const n=$('#h-n').value.trim(),pr=parseFloat($('#h-pr').value),d=$('#h-d').value;if(!n||!(pr>=0)||$('#h-pr').value===''){alert('請填寫商品名稱與價格');return}if(!d){alert('請選擇購買日期');return}
-  S.hist.push({id:'W'+Date.now().toString(36),d,n,q:+$('#h-q2').value||1,c:$('#h-c').value,p:$('#h-p').value.trim(),pr,t:+$('#h-t').value,r:+$('#h-r').value||RATE});$('#sheet').classList.remove('show');save()}
+  const pl=$('#h-p').value.trim();S.hist.push({id:'W'+Date.now().toString(36),d,n,q:+$('#h-q2').value||1,c:$('#h-c').value,p:pl,pr,t:+$('#h-t').value,r:+$('#h-r').value||RATE,cat:$('#h-cat').value||hclass({n,p:pl})});$('#sheet').classList.remove('show');save()}
  else if(a==='hdel'){const i=S.hist.findIndex(x=>x.id===v);if(i<0)return;const x=S.hist[i];if(confirm('確定要刪除「'+x.n+'」在 '+(x.p||'未填地點')+' 的購買紀錄嗎？')){S.hist.splice(i,1);save()}}
  else if(a==='tog'){openS[v]=!openS[v];R()}
  else if(a==='addshop')addShop();
