@@ -194,7 +194,7 @@ const ITIN0=()=>{_i=0;return {
  J('food','12:45','551蓬萊 豚饅 午餐','551蓬萊 難波','現場吃完，不要帶走','45 分','難波站周邊分店',{story:'大阪靈魂小吃。依台灣檢疫規定，日本豬肉製品通常不可攜帶入境，請現場吃完。',eat:['豚饅'],menu:['豚まん','焼売'],ticket:'約 ¥500–1,000'}),
  J('transit','14:30','取行李 → 前往關西機場','南海 難波駅','18:30 起飛，建議 15:30 前到機場','車程約 40 分','南海電鐵難波站 → 關西機場，預留退稅與報到時間',{story:'國際線建議起飛前約 3 小時抵達。'})]}};
 const EM={'關西機場（抵達）':'✈️','飯店放行李':'🏨','丸美衣料 太子店':'👗','通天閣・新世界':'🗼','阿倍野展望台（HARUKAS 300）':'🌇','心齋橋筋商店街':'🛍️','道頓堀':'🦀','錦市場':'🍢','宇治老街（抹茶午餐）':'🍵','平等院':'⛩️','任天堂博物館':'🍄','京都寶可夢中心':'⚡','勝尾寺':'🎎','天保山市場 午餐':'🍤','天保山海遊館':'🐋','梅田':'🌃','KKday 一日遊 集合':'🚌','嵐山':'🎋','金閣寺':'🏯','返回大阪':'🚌','難波八阪神社':'🦁','老爺爺蛋糕 難波本店':'🧀','退房、寄放行李':'🧳','難波周邊最後採買':'🛍️','551蓬萊 豚饅 午餐':'🥟','取行李 → 前往關西機場':'✈️'};
-const VER='v21';
+const VER='v22';
 const gq=(q,l)=>`https://www.google.com/search?q=${encodeURIComponent(q)}&tbs=qdr:y${l?'&lr='+l:''}`;
 const FE=[['章魚','🐙'],['大阪燒','🥞'],['蟹','🦀'],['螃蟹','🦀'],['起司','🧀'],['串炸','🍢'],['玉子','🍳'],['甜甜圈','🍩'],['抹茶','🍵'],['湯豆腐','🍲'],['豚饅','🥟'],['肉包','🥟'],['可樂餅','🍘'],['霜淇淋','🍦'],['拉麵','🍜'],['食堂','🏮'],['蛋糕','🍰']];
 const foodEm=x=>{const t=(x.name||'')+(x.dish||'');const m=FE.find(e=>t.includes(e[0]));return m?m[1]:'🍽️'};
@@ -481,7 +481,7 @@ exp:[],line:''});
 
 /* ============ 狀態與同步 ============ */
 const $=s=>document.querySelector(s);
-let shopWho='',hcat='all',hq='',shopMode='list',conn=false,ready=false,lastSync='',shadow={},openS={},S=null,tab='trip',day=0,ref=null,online=false;
+let packWho='',shopWho='',hcat='all',hq='',shopMode='list',conn=false,ready=false,lastSync='',shadow={},openS={},S=null,tab='trip',day=0,ref=null,online=false;
 const LKEY='osaka-kyoto-trip';
 const room=new URLSearchParams(location.search).get('room')||'trip-k7m2x9';
 const arr=v=>v?Object.values(v):[];
@@ -508,7 +508,7 @@ function norm(s){s=s||SEED();s.items=s.items||{};for(let i=0;i<5;i++)s.items[i]=
  if(!(s.v>=2)){s.pack=s.pack.filter(x=>!/^p[0-5]$/.test(x.id));const hv=new Set(s.pack.map(x=>x.text));PACK0().forEach(x=>{if(!hv.has(x.text))s.pack.push(x)});
   const hp=new Set(s.prep.map(x=>x.text));PREP0().forEach(x=>{if(!hp.has(x.text))s.prep.push(x)});s.v=2}
  if(s.v<3){const ids=new Set(s.pack.map(x=>x.id));s.pack=[...s.prep.map(x=>({...x,g:'行前準備'})).filter(x=>!ids.has(x.id)),...s.pack];s.prep=[];s.v=3}
- s.pack=s.pack.map(x=>({g:'其他用品',...x}));
+ s.pack=s.pack.map(x=>({g:'其他用品',...x,ppl:arr(x.ppl)}));
  s.stores=s.stores===undefined?['Cezanne','Canmake','3Coins','藥妝店','伴手禮','其他']:arr(s.stores);
  s.shop=s.shop.map(x=>({jp:'',tw:'',jt:'ex10',qty:1,...x,store:x.store||'其他',note:x.note!==undefined?x.note:(x.prev||''),ppl:arr(x.ppl)}));
  s.shop.forEach(x=>{if(!s.stores.includes(x.store))s.stores.push(x.store)});
@@ -620,15 +620,19 @@ function hotelView(){
  <button class="btn" data-a="hedit">✏️ 編輯</button></div></div>`}
 function listView(k){
  const T={pack:['🧳 行前準備 & 行李打包','例：雨傘'],prep:['📝 行前準備','例：兌換日幣']}[k];
- const L=S[k],gs=[...new Set(L.map(x=>x.g||'其他用品'))],dn=L.filter(x=>x.done).length;
- let h=`<div class="sec big" style="margin-top:22px">${T[0]}（${dn}/${L.length}）</div>
- <div class="frm"><div class="in">${k==='pack'?`<select id="n-g">${gs.map(g=>`<option>${esc(g)}</option>`).join('')}<option value="__new">＋新增分類…</option></select>`:''}<input id="n-in" placeholder="${T[1]}"></div>
- <div class="in"><button class="btn p" data-a="addli" data-v="${k}" style="flex:1">＋ 新增</button></div></div>`;
- gs.forEach(g=>{const its=L.map((x,i)=>({x,i})).filter(o=>(o.x.g||'其他用品')===g),d=its.filter(o=>o.x.done).length;
+ const M=S.members.filter(m=>!isP(m)),all=S[k],gs=[...new Set(all.map(x=>x.g||'其他用品'))],dn=all.filter(x=>x.done).length;
+ const mine=x=>!packWho||k!=='pack'||((x.ppl&&x.ppl.length)?x.ppl.some(p=>p.n===packWho):(!x.by||x.by===packWho));
+ let h=`<div class="sec big" style="margin-top:22px">${T[0]}（${dn}/${all.length}）</div>`;
+ if(k==='pack')h+=`<div class="days" style="padding:4px 4px 8px 0"><button class="chip ${!packWho?'on':''}" data-a="pwho" data-v=""><b>全部</b>大家</button>${M.map(m=>`<button class="chip ${packWho===m?'on':''}" style="background:${smcol(m)};color:#3b2d24;${packWho===m?'outline:2px solid var(--ink)':''}" data-a="pwho" data-v="${esc(m)}"><b>${esc(m)}</b>${all.filter(x=>(x.ppl||[]).some(p=>p.n===m&&!p.done)).length} 待辦</button>`).join('')}</div>`;
+ h+=`<div class="frm"><div class="in">${k==='pack'?`<select id="n-g">${gs.map(g=>`<option>${esc(g)}</option>`).join('')}<option value="__new">＋新增分類…</option></select>`:''}<input id="n-in" placeholder="${T[1]}"></div>`;
+ if(k==='pack')h+=`<label>誰要帶（勾選的人各自一份、各自打勾；都不勾＝共用一份）</label><div class="mem">${M.map(m=>`<label class="mc" style="background:${smcol(m)};color:#3b2d24"><input type="checkbox" class="pk" value="${esc(m)}" checked> ${esc(m)}</label>`).join('')}</div>
+  <div class="in"><select id="n-by"><option value="">共用時：誰帶（可不選）</option>${M.map(m=>`<option>${esc(m)}</option>`).join('')}</select></div>`;
+ h+=`<div class="in"><button class="btn p" data-a="addli" data-v="${k}" style="flex:1">＋ 新增</button></div>${k==='pack'&&all.some(x=>!(x.ppl&&x.ppl.length)&&x.mode!=='shared')?`<div class="in"><button class="btn" data-a="packall" style="flex:1">👥 舊項目全部改成「每人各一份」</button></div>`:''}</div>`;
+ gs.forEach(g=>{const its=all.map((x,i)=>({x,i})).filter(o=>(o.x.g||'其他用品')===g&&mine(o.x));if(!its.length)return;const d=its.filter(o=>o.x.done).length;
   if(k==='pack')h+=`<div class="sec">${esc(g)} <span class="pill">${d}/${its.length}</span></div>`;
   h+=its.map(({x,i})=>`<div class="row ${x.done?'done':''}"><input type="checkbox" ${x.done?'checked':''} data-a="chk" data-k="${k}" data-v="${i}">
- <span class="tx" style="color:${PAL[x.c||0]}">${esc(x.text)}</span>
- <button class="x" style="position:static" data-a="edit" data-k="${k}" data-v="${i}" aria-label="編輯">✏️</button>
+ <span class="tx"><span style="color:${PAL[x.c||0]}">${esc(x.text)}</span>${(x.ppl&&x.ppl.length)?`<div class="mem" style="margin:4px 0 0">${x.ppl.map((p,pi)=>`<button class="mc" style="background:${smcol(p.n)};color:#3b2d24;${p.done?'border:2px solid #2f9e63':''}" data-a="ppack" data-v="${i}" data-k="${pi}">${p.done?'✓':'○'} ${esc(p.n)}</button>`).join('')}</div>`:(x.by?`<div class="sub">👤 ${esc(x.by)} 帶</div>`:'')}</span>
+ <button class="x" style="position:static" data-a="${k==='pack'?'editk':'edit'}" data-k="${k}" data-v="${i}" aria-label="編輯">✏️</button>
  <button class="dot" style="background:${PAL[x.c||0]}" data-a="col" data-k="${k}" data-v="${i}" aria-label="換字體顏色"></button>
  <button class="x" style="position:static" data-a="delli" data-k="${k}" data-v="${i}">×</button></div>`).join('')});
  return h}
@@ -637,7 +641,8 @@ const RATE=0.21;
 const TXL={ex10:['未稅 10%',10,0],in10:['含稅 10%',10,1],ex8:['未稅 8%（食品）',8,0],in8:['含稅 8%（食品）',8,1]};
 const isP=m=>/（代購）$/.test(m);
 const PAL2=['#ffd6de','#d4f0dc','#cfe3ff','#fff1c9','#e6d9fa','#ffe3c2','#d8f1f1','#f6d5ec'];
-const smcol=m=>(S.smc&&S.smc[m])||(isP(m)?'#ffe3c2':PAL2[Math.max(0,S.sm.indexOf(m))%PAL2.length]);
+const ALLN=()=>[...S.members,...S.sm.filter(n=>!S.members.includes(n))];
+const smcol=m=>(S.smc&&S.smc[m])||(isP(m)?'#ffe3c2':PAL2[Math.max(0,ALLN().indexOf(m))%PAL2.length]);
 const td=()=>{const d=new Date();return String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0')};
 const qtyOf=x=>(x.ppl&&x.ppl.length)?x.ppl.reduce((a,p)=>a+(+p.q||1),0):(+x.qty||1);
 const fr=x=>(x.ppl&&x.ppl.length)?x.ppl.filter(p=>!p.done).reduce((a,p)=>a+(+p.q||1),0)/qtyOf(x):(x.done?0:1);
@@ -829,8 +834,24 @@ document.addEventListener('click',e=>{
  else if(a==='saveadd'){const n=$('#f-name').value.trim();if(!n)return;
   S.items[day].push(Object.assign(I($('#f-type').value,$('#f-time').value,n,$('#f-jp').value.trim(),$('#f-note').value.trim()),{tr:$('#f-tr').value.trim()}));
   S.items[day].sort((x,y)=>x.time.localeCompare(y.time));$('#sheet').classList.remove('show');save()}
- else if(a==='addli'){const t=$('#n-in').value.trim();if(!t)return;let g=v==='prep'?'行前準備':($('#n-g')?$('#n-g').value:'其他用品');if(g==='__new'){g=(prompt('新分類名稱')||'').trim();if(!g)return}S[v].push({id:Date.now()+'',text:t,g,done:false,c:0});save()}
- else if(a==='chk'){const x=S[k][+v];x.done=b.checked;if(k==='shop'&&x.ppl&&x.ppl.length)x.ppl.forEach(p=>{p.done=b.checked;p.d=b.checked?(p.d||td()):''});save()}
+ else if(a==='addli'){const t=$('#n-in').value.trim();if(!t)return;let g=v==='prep'?'行前準備':($('#n-g')?$('#n-g').value:'其他用品');if(g==='__new'){g=(prompt('新分類名稱')||'').trim();if(!g)return}const it={id:Date.now()+'',text:t,g,done:false,c:0};
+  if(v==='pack'){const ns=[...document.querySelectorAll('.pk:checked')].map(i=>i.value);if(ns.length){it.mode='each';it.ppl=ns.map(n=>({n,done:false}))}else{it.mode='shared';it.by=$('#n-by')?$('#n-by').value:''}}
+  S[v].push(it);save()}
+ else if(a==='pwho'){packWho=v;if(v)localStorage.setItem('who',v);R()}
+ else if(a==='ppack'){const x=S.pack[+v],p=x.ppl[+k];p.done=!p.done;x.done=x.ppl.every(q=>q.done);save()}
+ else if(a==='packall'){if(confirm('把還沒指定的項目全部改成「每人各一份」，大家各自打勾？\n已經勾選的項目，會視為每個人都完成。')){const M=S.members.filter(m=>!isP(m));S.pack.forEach(x=>{if(!(x.ppl&&x.ppl.length)&&x.mode!=='shared'){x.ppl=M.map(n=>({n,done:!!x.done}));x.mode='each'}});save()}}
+ else if(a==='editk'){const x=S.pack[+v],M=S.members.filter(m=>!isP(m)),pm=Object.fromEntries((x.ppl||[]).map(p=>[p.n,p])),gs=[...new Set(S.pack.map(y=>y.g||'其他用品'))];
+  $('#sheet').innerHTML=`<div class="pane"><h2>編輯項目</h2><label>名稱</label><input id="k-nm" value="${esc(x.text)}">
+  <label>分類</label><select id="k-g">${gs.map(g=>`<option ${g===(x.g||'其他用品')?'selected':''}>${esc(g)}</option>`).join('')}<option value="__new">＋新增分類…</option></select>
+  <label>誰要帶（勾選的人各自一份；都不勾＝共用一份）</label>${M.map(m=>{const p=pm[m];return `<div class="sr krow" data-m="${esc(m)}"><label class="mc" style="background:${smcol(m)};color:#3b2d24"><input type="checkbox" class="kw" ${p?'checked':''}> ${esc(m)}</label><label class="mc"><input type="checkbox" class="kd" ${p&&p.done?'checked':''}> 已準備</label></div>`}).join('')}
+  <label>共用時：誰帶</label><select id="k-by"><option value="">不指定</option>${M.map(m=>`<option ${x.by===m?'selected':''}>${esc(m)}</option>`).join('')}</select>
+  <div class="btns"><button class="btn p" data-a="savek" data-v="${v}">儲存</button><button class="btn" data-a="close">取消</button></div></div>`;showSheet()}
+ else if(a==='savek'){const x=S.pack[+v],nm=$('#k-nm').value.trim();if(!nm){alert('名稱不能空白');return}let g=$('#k-g').value;if(g==='__new')g=(prompt('新分類名稱')||'').trim()||x.g;
+  x.text=nm;x.g=g;const rows=[...document.querySelectorAll('.krow')];
+  if(rows.length){const np=[];rows.forEach(r=>{if(r.querySelector('.kw').checked)np.push({n:r.dataset.m,done:!!r.querySelector('.kd').checked})});x.ppl=np;x.mode=np.length?'each':'shared'}
+  x.by=(x.ppl&&x.ppl.length)?'':($('#k-by').value||'');if(x.ppl&&x.ppl.length)x.done=x.ppl.every(p=>p.done);
+  $('#sheet').classList.remove('show');save()}
+ else if(a==='chk'){const x=S[k][+v];x.done=b.checked;if((k==='shop'||k==='pack')&&x.ppl&&x.ppl.length)x.ppl.forEach(p=>{p.done=b.checked;if(k==='shop')p.d=b.checked?(p.d||td()):''});save()}
  else if(a==='col'){S[k][+v].c=((S[k][+v].c||0)+1)%PAL.length;save()}
  else if(a==='delli'){const x=S[k][+v];if(confirm('確定要刪除「'+(x.text||x.name||'此項目')+'」嗎？')){if(k==='shop'&&S.simg[x.id])S.simg[x.id]=[];S[k].splice(+v,1);save()}}
  else if(a==='addexp'){const t=$('#e-t').value.trim(),m=$('#e-a').value,w=$('#e-w')?$('#e-w').value:'',sp=[...document.querySelectorAll('.sp:checked')].map(i=>i.value);
