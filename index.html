@@ -120,12 +120,15 @@ nav{border-bottom:1.5px solid var(--bd);box-shadow:0 8px 16px -14px rgba(91,67,5
 .sb .store{box-shadow:none;margin:8px 0;border-width:1.5px}
 .cnt{position:absolute;right:2px;bottom:2px;background:var(--ink);color:var(--bg);border-radius:9px;font-size:11px;line-height:16px;padding:0 5px}
 .gal{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}.gi{position:relative;aspect-ratio:1;border-radius:14px;overflow:hidden;border:1.5px solid var(--bd)}.gi img{width:100%;height:100%;object-fit:cover}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:16px;font-size:14px;z-index:50;display:none;max-width:86%;text-align:center;box-shadow:var(--sd)}#toast.show{display:block}
+.in>select{flex:1;width:auto;min-width:0}
 </style>
 </head>
 <body>
 <nav id="nav"></nav>
 <div id="app"></div>
 <div id="sheet"></div>
+<div id="toast"></div>
 
 <script>
 /* ============ 設定區 ============
@@ -194,7 +197,7 @@ const ITIN0=()=>{_i=0;return {
  J('food','12:45','551蓬萊 豚饅 午餐','551蓬萊 難波','現場吃完，不要帶走','45 分','難波站周邊分店',{story:'大阪靈魂小吃。依台灣檢疫規定，日本豬肉製品通常不可攜帶入境，請現場吃完。',eat:['豚饅'],menu:['豚まん','焼売'],ticket:'約 ¥500–1,000'}),
  J('transit','14:30','取行李 → 前往關西機場','南海 難波駅','18:30 起飛，建議 15:30 前到機場','車程約 40 分','南海電鐵難波站 → 關西機場，預留退稅與報到時間',{story:'國際線建議起飛前約 3 小時抵達。'})]}};
 const EM={'關西機場（抵達）':'✈️','飯店放行李':'🏨','丸美衣料 太子店':'👗','通天閣・新世界':'🗼','阿倍野展望台（HARUKAS 300）':'🌇','心齋橋筋商店街':'🛍️','道頓堀':'🦀','錦市場':'🍢','宇治老街（抹茶午餐）':'🍵','平等院':'⛩️','任天堂博物館':'🍄','京都寶可夢中心':'⚡','勝尾寺':'🎎','天保山市場 午餐':'🍤','天保山海遊館':'🐋','梅田':'🌃','KKday 一日遊 集合':'🚌','嵐山':'🎋','金閣寺':'🏯','返回大阪':'🚌','難波八阪神社':'🦁','老爺爺蛋糕 難波本店':'🧀','退房、寄放行李':'🧳','難波周邊最後採買':'🛍️','551蓬萊 豚饅 午餐':'🥟','取行李 → 前往關西機場':'✈️'};
-const VER='v22';
+const VER='v24';
 const gq=(q,l)=>`https://www.google.com/search?q=${encodeURIComponent(q)}&tbs=qdr:y${l?'&lr='+l:''}`;
 const FE=[['章魚','🐙'],['大阪燒','🥞'],['蟹','🦀'],['螃蟹','🦀'],['起司','🧀'],['串炸','🍢'],['玉子','🍳'],['甜甜圈','🍩'],['抹茶','🍵'],['湯豆腐','🍲'],['豚饅','🥟'],['肉包','🥟'],['可樂餅','🍘'],['霜淇淋','🍦'],['拉麵','🍜'],['食堂','🏮'],['蛋糕','🍰']];
 const foodEm=x=>{const t=(x.name||'')+(x.dish||'');const m=FE.find(e=>t.includes(e[0]));return m?m[1]:'🍽️'};
@@ -513,23 +516,24 @@ function norm(s){s=s||SEED();s.items=s.items||{};for(let i=0;i<5;i++)s.items[i]=
  s.shop=s.shop.map(x=>({jp:'',tw:'',jt:'ex10',qty:1,...x,store:x.store||'其他',note:x.note!==undefined?x.note:(x.prev||''),ppl:arr(x.ppl)}));
  s.shop.forEach(x=>{if(!s.stores.includes(x.store))s.stores.push(x.store)});
  Object.values(s.items).forEach(a=>a.forEach(x=>{if(!x.tr&&TR[x.name])x.tr=TR[x.name]}));return s}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(window._tt);window._tt=setTimeout(()=>t.classList.remove('show'),2800)}
 const clean=o=>JSON.parse(JSON.stringify(o));
 function flat(s){const o={};for(const k in s){if(k==='items')for(let d=0;d<5;d++)o['items/'+d]=s.items[d];else if(k==='simg')for(const id in s.simg)o['simg/'+id]=s.simg[id];else o[k]=s[k]}return o}
 function save(){
- if(ref&&conn&&!ready){alert('資料還在同步中，請稍等幾秒再編輯');return}
+ if(ref&&conn&&!ready){toast('資料還在同步中，請稍等幾秒再編輯');return}
  localStorage.setItem(LKEY+room,JSON.stringify(S));
  if(ref){const n=flat(clean(S)),u={};for(const k in n){if(JSON.stringify(n[k])!==JSON.stringify(shadow[k]))u[k]=(Array.isArray(n[k])&&!n[k].length)?null:n[k]}
-  shadow=n;if(Object.keys(u).length)ref.update(u).catch(e=>alert('同步失敗：'+e.message))}
+  shadow=n;if(Object.keys(u).length)ref.update(u).catch(e=>toast('同步失敗：'+e.message))}
  R()}
 function apply(v){S=norm(v);shadow=flat(clean(S));ready=true;lastSync=new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit',hour12:false});
  localStorage.setItem(LKEY+room,JSON.stringify(S));
  if(!(v.v>=3&&v.iv>=3&&v.fv>=2&&v.hv>=2&&v.sv>=1&&v.pv>=1))ref.set(clean(S));
- if(!(document.activeElement&&document.activeElement.tagName==='INPUT'))R()}
+ if(!(document.activeElement&&document.activeElement.tagName==='INPUT'))R(true)}
 function boot(){
  const local=localStorage.getItem(LKEY+room);S=norm(local?JSON.parse(local):null);
  if(FIREBASE_CONFIG&&window.firebase){
   firebase.initializeApp(FIREBASE_CONFIG);ref=firebase.database().ref('rooms/'+room);online=true;
-  firebase.database().ref('.info/connected').on('value',s=>{conn=!!s.val();if(!(document.activeElement&&document.activeElement.tagName==='INPUT'))R()});
+  firebase.database().ref('.info/connected').on('value',s=>{conn=!!s.val();if(!(document.activeElement&&document.activeElement.tagName==='INPUT'))R(true)});
   ref.on('value',snap=>{const v=snap.val();if(v===null){ready=true;shadow=flat(clean(S));ref.set(clean(S));R();return}apply(v)},e=>alert('讀取失敗：'+e.message));
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)ref.once('value').then(s=>{if(s.val()!==null)apply(s.val())})});
  }
@@ -540,7 +544,10 @@ function boot(){
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const enc=encodeURIComponent;
 const navURL=x=>`https://www.google.com/maps/dir/?api=1&destination=${enc(x.jp||x.name)}&travelmode=transit`;
-function R(){
+function formKey(el){return el.id||((el.className&&el.value)?('c:'+el.className+':'+el.value):'')}
+function formSnap(){const o={};document.querySelectorAll('#app input,#app select').forEach(el=>{if(el.type==='file')return;const k=formKey(el);if(k)o[k]=el.type==='checkbox'?el.checked:el.value});return o}
+function formRestore(o){document.querySelectorAll('#app input,#app select').forEach(el=>{if(el.type==='file')return;const k=formKey(el);if(k&&k in o){if(el.type==='checkbox')el.checked=o[k];else el.value=o[k]}})}
+function R(keep){const snap=keep?formSnap():null;
  $('#nav').innerHTML=`<div class="hd"><span class="logo">🍂</span><b>大阪・京都手帳</b><button class="sync th" data-a="theme" aria-label="換主題">🎨</button><button class="sync ${conn?'':'off'}" data-a="${online?'share':'noop'}"><i></i>${!online?'單機':conn?'已同步'+(lastSync?' '+lastSync:''):'連線中…'}</button></div><div class="clk" id="clk"></div><div class="tabs">`+
   [['trip','🗾','行程'],['pack','🧳','行李'],['food','🍜','美食'],['coll','⛩️','神社'],['shop','🛍️','購物'],['exp','💴','記帳']].map(([k,e,t])=>`<button class="${tab===k?'on':''}" data-a="tab" data-v="${k}"><span>${e}</span>${t}</button>`).join('')+`</div>`;
  let h='';
@@ -551,7 +558,7 @@ function R(){
  else if(tab==='food')h+=foodView();
  else if(tab==='coll')h+=collView();
  else h+=(tab==='pack'?hotelView():'')+listView(tab);
- $('#app').innerHTML=h;tick();
+ $('#app').innerHTML=h;if(snap)formRestore(snap);tick();
  if(tab==='trip')weather(day);
 }
 function tick(){const e=$('#clk');if(!e)return;const f=z=>new Date().toLocaleTimeString('zh-TW',{timeZone:z,hour:'2-digit',minute:'2-digit',hour12:false});
@@ -624,7 +631,7 @@ function listView(k){
  const mine=x=>!packWho||k!=='pack'||((x.ppl&&x.ppl.length)?x.ppl.some(p=>p.n===packWho):(!x.by||x.by===packWho));
  let h=`<div class="sec big" style="margin-top:22px">${T[0]}（${dn}/${all.length}）</div>`;
  if(k==='pack')h+=`<div class="days" style="padding:4px 4px 8px 0"><button class="chip ${!packWho?'on':''}" data-a="pwho" data-v=""><b>全部</b>大家</button>${M.map(m=>`<button class="chip ${packWho===m?'on':''}" style="background:${smcol(m)};color:#3b2d24;${packWho===m?'outline:2px solid var(--ink)':''}" data-a="pwho" data-v="${esc(m)}"><b>${esc(m)}</b>${all.filter(x=>(x.ppl||[]).some(p=>p.n===m&&!p.done)).length} 待辦</button>`).join('')}</div>`;
- h+=`<div class="frm"><div class="in">${k==='pack'?`<select id="n-g">${gs.map(g=>`<option>${esc(g)}</option>`).join('')}<option value="__new">＋新增分類…</option></select>`:''}<input id="n-in" placeholder="${T[1]}"></div>`;
+ h+=`<div class="frm"><label>➕ 新增項目</label><div class="in"><input id="n-in" placeholder="輸入項目名稱，例：洗面乳"></div>${k==='pack'?`<label>放在哪個分類</label><div class="in"><select id="n-g">${gs.map(g=>`<option>${esc(g)}</option>`).join('')}<option value="__new">＋新增分類…</option></select></div>`:''}`;
  if(k==='pack')h+=`<label>誰要帶（勾選的人各自一份、各自打勾；都不勾＝共用一份）</label><div class="mem">${M.map(m=>`<label class="mc" style="background:${smcol(m)};color:#3b2d24"><input type="checkbox" class="pk" value="${esc(m)}" checked> ${esc(m)}</label>`).join('')}</div>
   <div class="in"><select id="n-by"><option value="">共用時：誰帶（可不選）</option>${M.map(m=>`<option>${esc(m)}</option>`).join('')}</select></div>`;
  h+=`<div class="in"><button class="btn p" data-a="addli" data-v="${k}" style="flex:1">＋ 新增</button></div>${k==='pack'&&all.some(x=>!(x.ppl&&x.ppl.length)&&x.mode!=='shared')?`<div class="in"><button class="btn" data-a="packall" style="flex:1">👥 舊項目全部改成「每人各一份」</button></div>`:''}</div>`;
@@ -813,7 +820,7 @@ async function weather(i){
 }
 
 /* ============ 事件 ============ */
-document.addEventListener('click',e=>{
+function onClick(e){
  if(e.target.closest('[data-stop]'))return;
  const b=e.target.closest('[data-a]');
  if(e.target.id==='sheet'){$('#sheet').classList.remove('show');return}
@@ -834,7 +841,7 @@ document.addEventListener('click',e=>{
  else if(a==='saveadd'){const n=$('#f-name').value.trim();if(!n)return;
   S.items[day].push(Object.assign(I($('#f-type').value,$('#f-time').value,n,$('#f-jp').value.trim(),$('#f-note').value.trim()),{tr:$('#f-tr').value.trim()}));
   S.items[day].sort((x,y)=>x.time.localeCompare(y.time));$('#sheet').classList.remove('show');save()}
- else if(a==='addli'){const t=$('#n-in').value.trim();if(!t)return;let g=v==='prep'?'行前準備':($('#n-g')?$('#n-g').value:'其他用品');if(g==='__new'){g=(prompt('新分類名稱')||'').trim();if(!g)return}const it={id:Date.now()+'',text:t,g,done:false,c:0};
+ else if(a==='addli'){const t=$('#n-in').value.trim();if(!t){toast('請先輸入名稱再按新增');return}let g=v==='prep'?'行前準備':($('#n-g')?$('#n-g').value:'其他用品');if(g==='__new'){g=(prompt('新分類名稱')||'').trim();if(!g)return}const it={id:Date.now()+'',text:t,g,done:false,c:0};
   if(v==='pack'){const ns=[...document.querySelectorAll('.pk:checked')].map(i=>i.value);if(ns.length){it.mode='each';it.ppl=ns.map(n=>({n,done:false}))}else{it.mode='shared';it.by=$('#n-by')?$('#n-by').value:''}}
   S[v].push(it);save()}
  else if(a==='pwho'){packWho=v;if(v)localStorage.setItem('who',v);R()}
@@ -857,11 +864,11 @@ document.addEventListener('click',e=>{
  else if(a==='addexp'){const t=$('#e-t').value.trim(),m=$('#e-a').value,w=$('#e-w')?$('#e-w').value:'',sp=[...document.querySelectorAll('.sp:checked')].map(i=>i.value);
   if(!t||!m||!w||!sp.length){alert('請填項目、金額、誰先付，並至少勾選一位分攤的人（沒有成員請先新增）');return}
   localStorage.setItem('who',w);S.exp.push({id:Date.now()+'',text:t,amt:+m,cat:$('#e-c').value,payer:w,split:sp});save()}
- else if(a==='addmem'){const n=$('#m-in').value.trim();if(!n||S.members.includes(n))return;S.members.push(n);save()}
+ else if(a==='addmem'){const n=$('#m-in').value.trim();if(!n){toast('請先輸入成員名字');return}if(S.members.includes(n)){toast('這個成員已經存在');return}S.members.push(n);save()}
  else if(a==='delmem'){const n=S.members[+v];if(S.exp.some(x=>x.payer===n||(x.split||[]).includes(n))){alert('這位成員已有記帳紀錄，無法刪除');return}if(confirm('確定要刪除成員「'+n+'」嗎？')){S.members.splice(+v,1);save()}}
  else if(a==='spall'||a==='spnone'){document.querySelectorAll('.sp').forEach(i=>i.checked=a==='spall')}
- else if(a==='addfood'){const n=$('#f-n').value.trim();if(!n)return;let ar=$('#f-a').value;if(ar==='__new'){ar=(prompt('新區域名稱（例：D3 梅田）')||'').trim();if(!ar)return}openS['f:'+ar]=true;S.food.push({id:Date.now()+'',area:ar,name:n,dish:$('#f-d').value.trim(),price:$('#f-p').value.trim(),intro:$('#f-i').value.trim(),done:false});save()}
- else if(a==='addcoll'){const n=$('#c-n').value.trim();if(!n)return;S.coll.push({id:Date.now()+'',kind:$('#c-k').value,name:n,place:$('#c-p').value.trim(),price:$('#c-m').value.trim(),note:'',done:false});save()}
+ else if(a==='addfood'){const n=$('#f-n').value.trim();if(!n){toast('請先輸入店名再按新增');return}let ar=$('#f-a').value;if(ar==='__new'){ar=(prompt('新區域名稱（例：D3 梅田）')||'').trim();if(!ar)return}openS['f:'+ar]=true;S.food.push({id:Date.now()+'',area:ar,name:n,dish:$('#f-d').value.trim(),price:$('#f-p').value.trim(),intro:$('#f-i').value.trim(),done:false});save()}
+ else if(a==='addcoll'){const n=$('#c-n').value.trim();if(!n){toast('請先輸入名稱再按新增');return}S.coll.push({id:Date.now()+'',kind:$('#c-k').value,name:n,place:$('#c-p').value.trim(),price:$('#c-m').value.trim(),note:'',done:false});save()}
  else if(a==='hc'){hcat=v;R()}
  else if(a==='hcatset'){$('#sheet').innerHTML=`<div class="pane"><h2>改分類</h2><div class="sub">${esc(v)}（這個商品的所有紀錄都會一起改）</div><label>分類</label><select id="h-ck">${HC.map(c=>`<option value="${c[0]}">${c[1]} ${c[2]}</option>`).join('')}</select>
   <div class="btns"><button class="btn p" data-a="hcatsave" data-v="${esc(v)}">儲存</button><button class="btn" data-a="close">取消</button></div></div>`;showSheet()}
@@ -908,7 +915,7 @@ document.addEventListener('click',e=>{
  else if(a==='settl'){const x=S.food[+v],t=prompt('填入 Tabelog 評分（例：3.58，可留空）',x.tl||'');if(t===null)return;x.tl=t.trim();$('#sheet').classList.remove('show');save()}
  else if(a==='delfph'){if(confirm('確定要刪除這張照片嗎？')){delete S.food[+v].img;$('#sheet').classList.remove('show');save()}}
  else if(a==='delph'){if(confirm('確定要刪除這張照片嗎？')){delete S.shop[+v].img;$('#sheet').classList.remove('show');save()}}
- else if(a==='addstore'){const t=$('#st-in').value.trim();if(!t||S.stores.includes(t))return;S.stores.push(t);openS[t]=true;save()}
+ else if(a==='addstore'){const t=$('#st-in').value.trim();if(!t){toast('請先輸入店家名稱');return}if(S.stores.includes(t)){toast('這個店家已經存在');return}S.stores.push(t);openS[t]=true;save()}
  else if(a==='delstore'){const st=S.stores[+v];if(confirm('刪除「'+st+'」和裡面所有商品？')){S.shop.filter(x=>x.store===st).forEach(x=>{if(S.simg[x.id])S.simg[x.id]=[]});S.shop=S.shop.filter(x=>x.store!==st);S.stores.splice(+v,1);save()}}
  else if(a==='editp'){const x=S.shop[+v],M=S.sm,pm=Object.fromEntries((x.ppl||[]).map(p=>[p.n,p]));$('#sheet').innerHTML=`<div class="pane"><h2>編輯商品</h2>
   <label>商品名稱</label><input id="e-nm" value="${esc(x.text)}">
@@ -935,13 +942,14 @@ document.addEventListener('click',e=>{
  else if(a==='trf'){S.refund=(S.refund===false);save()}
  else if(a==='saveline'){S.line=$('#l-in').value.trim();save()}
  else if(a==='share'){e.preventDefault();navigator.clipboard?.writeText(location.href);alert('已複製！傳給旅伴就能一起編輯')}
-});
+}
+document.addEventListener('click',e=>{try{onClick(e)}catch(err){console.error(err);toast('發生錯誤：'+err.message)}});
 function showSheet(){const s=$('#sheet'),p=s.querySelector&&s.querySelector('.pane');if(p&&!p.querySelector('.xc'))p.insertAdjacentHTML('afterbegin','<button class="xc" data-a="close" aria-label="關閉">✕</button>');s.classList.add('show')}
 function galOpen(i){const x=S.shop[i],im=S.simg[x.id]||[];$('#sheet').innerHTML=`<div class="pane"><h2>${esc(x.text)}</h2><div class="sub">${im.length} 張照片（最多 8 張）</div>
  <div class="gal">${im.map((s,k)=>`<div class="gi"><img src="${s}" alt="" data-a="big" data-v="${i}" data-k="${k}"><button class="x" style="position:absolute;right:2px;top:2px;background:var(--card);border-radius:50%;width:26px;height:26px;font-size:15px" data-a="delimg" data-v="${i}" data-k="${k}" aria-label="刪除">×</button></div>`).join('')}</div>
  <div class="btns"><label class="btn p">📷 新增照片（可多選）<input type="file" accept="image/*" multiple hidden data-ph="${i}"></label></div></div>`;showSheet()}
 function squeeze(f){return new Promise(r=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const k=Math.min(1,600/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.6))};im.onerror=()=>r('');im.src=u})}
-async function addShop(){const t=$('#s-name').value.trim();if(!t)return;const fl=[...($('#s-ph').files||[])].slice(0,8),st=$('#s-store').value,q=Math.max(1,+$('#s-qty').value||1);
+async function addShop(){const t=$('#s-name').value.trim();if(!t){toast('請先輸入商品名稱再按新增');return}const fl=[...($('#s-ph').files||[])].slice(0,8),st=$('#s-store').value,q=Math.max(1,+$('#s-qty').value||1);
  const ppl=[...document.querySelectorAll('.sw:checked')].map(i=>({n:i.value,q,done:false,d:''}));
  const ex=ppl.length?S.shop.find(y=>y.store===st&&y.text.trim().toLowerCase()===t.toLowerCase()&&(y.ppl||[]).length):null;
  if(ex&&confirm('「'+ex.text+'」已經在清單裡了。\n按「確定」＝把你們加進這一項的想買名單（同一項，各自記錄買了沒）\n按「取消」＝另外新增一筆')){
