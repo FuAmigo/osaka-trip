@@ -153,6 +153,7 @@ const PG={'衣物':['上衣及下身','貼身衣物/發熱衣','浴巾','襪子/
 let _n=0;const mk=(g,t)=>({id:'a'+(_n++),g,text:t,done:false,c:0});
 const PACK0=()=>{_n=100;return Object.entries(PG).flatMap(([g,a])=>a.map(t=>mk(g,t)))};
 const PREP0=()=>{_n=0;return ['填寫 VJW','投保旅平險','買 eSIM / 實體 SIM 卡','確認機場包車','行前拍攝行李箱','訂南海電鐵票'].map(t=>mk('行前準備',t))};
+const FL0=()=>[{id:'f1',date:'2026-12-16',no:'長榮 BR178',route:'桃園 TPE → 大阪關西 KIX',time:'06:30',refund:false,note:''},{id:'f2',date:'2026-12-20',no:'長榮 BR129',route:'大阪關西 KIX → 桃園 TPE',time:'18:10',refund:true,note:'要辦退稅：託運行李前先做海關確認'}];
 const THEMES=['cocoa','autumn','rose','matcha','night'];
 const TN={cocoa:'☕ 暖橘',autumn:'🍂 秋日黃',rose:'🌸 柔粉',matcha:'🍵 抹茶綠',night:'🌙 深色'};
 const TR={'關西機場 → 難波':'南海電鐵 Rapi:t 約 40 分，抵達難波站','道頓堀・固力果跑跑人':'地鐵難波站步行約 5–8 分','章魚燒 たこ家道頓堀くくる':'位在道頓堀商店街內，順路步行即可','大阪城天守閣':'搭 JR 環狀線到大阪城公園站，步行約 10 分','黑門市場':'地鐵日本橋站步行約 3 分','梅田藍天大廈空中庭園':'JR 大阪站步行約 10 分（有地下通道）','伏見稻荷大社':'JR 奈良線到稻荷站，下車即到','錦市場':'阪急河原町站步行約 5 分','清水寺':'市巴士到清水道，再上坡步行約 10 分','嵐山竹林小徑':'JR 嵯峨嵐山站步行約 10 分','嵯峨野湯豆腐':'從竹林小徑步行前往，建議提早到或先訂位','金閣寺':'市巴士到金閣寺道，步行約 3 分','心齋橋筋商店街':'地鐵心齋橋站直達','551蓬萊 豚饅':'難波站周邊有分店，搭機前順路購買','難波 → 關西機場':'南海電鐵難波站出發約 40 分，建議起飛前 3 小時到機場'};
@@ -170,7 +171,7 @@ const I=(type,time,name,jp,note,g)=>({id:Math.random().toString(36).slice(2,9),t
 let _i=0;const J=(type,time,name,jp,note,stay,tr,g)=>({id:'j'+(_i++),type,time,name,jp,note,tr,g:{stay,...g}});
 const OLDN=new Set(['關西機場 → 難波','道頓堀・固力果跑跑人','章魚燒 たこ家道頓堀くくる','大阪城天守閣','黑門市場','梅田藍天大廈空中庭園','伏見稻荷大社','錦市場','清水寺','嵐山竹林小徑','嵯峨野湯豆腐','金閣寺','心齋橋筋商店街','551蓬萊 豚饅','難波 → 關西機場']);
 const ITIN0=()=>{_i=0;return {
-0:[J('transit','10:20','關西機場（抵達）','關西国際空港駅','06:30 桃園起飛，約 10:20 抵達（日本比台灣快 1 小時）','60–90 分（入境、領行李、買卡）','南海電鐵 Rapi:t 約 40 分到難波站',{story:'早班機抵達後先放行李再逛，最能把第一天用滿。',gift:['ICOCA 交通卡（或手機綁 Suica）'],ticket:'Rapi:t 約 ¥1,490（以官網為準）'}),
+0:[J('transit','10:20','關西機場（抵達）','關西国際空港駅','長榮 BR178 06:30 桃園起飛，約 10:20 抵達（日本比台灣快 1 小時）','60–90 分（入境、領行李、買卡）','南海電鐵 Rapi:t 約 40 分到難波站',{story:'早班機抵達後先放行李再逛，最能把第一天用滿。',gift:['ICOCA 交通卡（或手機綁 Suica）'],ticket:'Rapi:t 約 ¥1,490（以官網為準）'}),
  J('transit','12:45','飯店放行李','大阪府大阪市浪速区幸町3-3-14 GN98','入住 16:00 起，現在先寄放行李','30 分','桜川站步行約 1 分',{story:'未到入住時間，請先詢問可否寄放；放完直接出發。'}),
  J('spot','13:30','丸美衣料 太子店','丸美衣料 太子店','18:00 打烊，建議 17:00 前結帳','60 分','位於西成區太子一帶，與通天閣同區，用導航確認最近車站',{story:'已知 18:00 打烊，所以排在第一天下午，先辦完採買。',see:['冬季保暖衣物區','特價區'],gift:['發熱衣、外套（依現場貨）']}),
  J('spot','14:45','通天閣・新世界','通天閣','串炸老街，順便當遲來的午餐','90 分（含午餐）','地鐵「動物園前」站步行約 5–10 分',{story:'新世界的象徵，展望台可摸比利肯（Billiken）腳底祈福。',see:['通天閣展望台＋摸比利肯','新世界霓虹串炸街'],eat:['串炸（だるま、八重勝等老店）'],menu:['牛肉串','蓮藕串','記得醬汁不可二次沾'],gift:['比利肯小物'],ticket:'展望台約 ¥1,200–1,500（以官網為準）'}),
@@ -192,12 +193,12 @@ const ITIN0=()=>{_i=0;return {
  J('transit','17:30','返回大阪','','依 KKday 行程返回','—','以憑證下車點為準',{story:'回程時間不確定，晚餐建議在飯店附近。'})],
 4:[J('spot','07:45','難波八阪神社','難波八阪神社','巨大獅子頭神殿','30–40 分','從桜川搭地鐵約 10 分，步行即達',{story:'獅子殿是最大特色，求勝運與學業。',see:['獅子殿巨大獅子頭','境內小神社'],gift:['獅子御守','繪馬'],ticket:'免費'}),
  J('food','09:00','老爺爺蛋糕 難波本店','りくろーおじさんの店 難波本店','現烤起司蛋糕，建議開店前先排隊','30–45 分','難波站步行約 5–8 分',{story:'大阪名物，剛出爐最好吃。',eat:['現烤起司蛋糕'],menu:['焼きたてチーズケーキ'],gift:['起司蛋糕（回台前請先查檢疫規定）'],ticket:'價格以現場為準'}),
- J('transit','10:00','退房、寄放行李','大阪府大阪市浪速区幸町3-3-14 GN98','10:00 前退房，行李可先寄放','20 分','回飯店取行李前先寄放在飯店或難波置物櫃',{story:'航班 18:30，下午還有時間，行李先寄放比較輕鬆。'}),
+ J('transit','10:00','退房、寄放行李','大阪府大阪市浪速区幸町3-3-14 GN98','10:00 前退房，行李可先寄放','20 分','回飯店取行李前先寄放在飯店或難波置物櫃',{story:'航班 18:10，下午還有時間，行李先寄放比較輕鬆。'}),
  J('spot','10:45','難波周邊最後採買','なんばパークス','藥妝補貨、伴手禮','2–2.5 小時','難波站周邊步行串聯',{story:'補買前面沒買到的東西。',see:['Namba Parks 屋頂花園','道具屋筋'],gift:['藥妝補貨','Pablo 起司塔','道具屋筋刀具廚具'],ticket:'免費'}),
- J('food','12:45','551蓬萊 豚饅 午餐','551蓬萊 難波','現場吃完，不要帶走','45 分','難波站周邊分店',{story:'大阪靈魂小吃。依台灣檢疫規定，日本豬肉製品通常不可攜帶入境，請現場吃完。',eat:['豚饅'],menu:['豚まん','焼売'],ticket:'約 ¥500–1,000'}),
- J('transit','14:30','取行李 → 前往關西機場','南海 難波駅','18:30 起飛，建議 15:30 前到機場','車程約 40 分','南海電鐵難波站 → 關西機場，預留退稅與報到時間',{story:'國際線建議起飛前約 3 小時抵達。'})]}};
-const EM={'關西機場（抵達）':'✈️','飯店放行李':'🏨','丸美衣料 太子店':'👗','通天閣・新世界':'🗼','阿倍野展望台（HARUKAS 300）':'🌇','心齋橋筋商店街':'🛍️','道頓堀':'🦀','錦市場':'🍢','宇治老街（抹茶午餐）':'🍵','平等院':'⛩️','任天堂博物館':'🍄','京都寶可夢中心':'⚡','勝尾寺':'🎎','天保山市場 午餐':'🍤','天保山海遊館':'🐋','梅田':'🌃','KKday 一日遊 集合':'🚌','嵐山':'🎋','金閣寺':'🏯','返回大阪':'🚌','難波八阪神社':'🦁','老爺爺蛋糕 難波本店':'🧀','退房、寄放行李':'🧳','難波周邊最後採買':'🛍️','551蓬萊 豚饅 午餐':'🥟','取行李 → 前往關西機場':'✈️'};
-const VER='v24';
+ J('food','12:15','551蓬萊 豚饅 午餐','551蓬萊 難波','現場吃完，不要帶走','45 分','難波站周邊分店',{story:'大阪靈魂小吃。依台灣檢疫規定，日本豬肉製品通常不可攜帶入境，請現場吃完。',eat:['豚饅'],menu:['豚まん','焼売'],ticket:'約 ¥500–1,000'}),
+ J('transit','13:15','取行李 → 前往關西機場（BR129 18:10）','南海 難波駅','建議 14:45 前到機場，先辦退稅再託運','車程約 40 分','約 14:00 搭南海 Rapi:t（約 40 分）；到機場先到退稅機，再去長榮櫃檯',{story:'BR129 18:10 起飛。退稅海關確認要在託運前完成，詳細時間表在行李頁的「航班」。'})]}};
+const EM={'關西機場（抵達）':'✈️','飯店放行李':'🏨','丸美衣料 太子店':'👗','通天閣・新世界':'🗼','阿倍野展望台（HARUKAS 300）':'🌇','心齋橋筋商店街':'🛍️','道頓堀':'🦀','錦市場':'🍢','宇治老街（抹茶午餐）':'🍵','平等院':'⛩️','任天堂博物館':'🍄','京都寶可夢中心':'⚡','勝尾寺':'🎎','天保山市場 午餐':'🍤','天保山海遊館':'🐋','梅田':'🌃','KKday 一日遊 集合':'🚌','嵐山':'🎋','金閣寺':'🏯','返回大阪':'🚌','難波八阪神社':'🦁','老爺爺蛋糕 難波本店':'🧀','退房、寄放行李':'🧳','難波周邊最後採買':'🛍️','551蓬萊 豚饅 午餐':'🥟','取行李 → 前往關西機場（BR129 18:10）':'✈️'};
+const VER='v25';
 const gq=(q,l)=>`https://www.google.com/search?q=${encodeURIComponent(q)}&tbs=qdr:y${l?'&lr='+l:''}`;
 const FE=[['章魚','🐙'],['大阪燒','🥞'],['蟹','🦀'],['螃蟹','🦀'],['起司','🧀'],['串炸','🍢'],['玉子','🍳'],['甜甜圈','🍩'],['抹茶','🍵'],['湯豆腐','🍲'],['豚饅','🥟'],['肉包','🥟'],['可樂餅','🍘'],['霜淇淋','🍦'],['拉麵','🍜'],['食堂','🏮'],['蛋糕','🍰']];
 const foodEm=x=>{const t=(x.name||'')+(x.dish||'');const m=FE.find(e=>t.includes(e[0]));return m?m[1]:'🍽️'};
@@ -476,7 +477,7 @@ function hcalc(x){const ex=x.pr/hk(x),q=x.q>0?x.q:1,rate=x.c==='TWD'?1:(x.r||RAT
 function histGroups(){const m={};S.hist.forEach(x=>{const k=x.n.trim().toLowerCase();(m[k]=m[k]||[]).push(x)});
  return Object.values(m).map(a=>{a.sort((p,q)=>q.d.localeCompare(p.d));const min=a.reduce((b,x)=>hcalc(x).unit<hcalc(b).unit?x:b,a[0]);return{a,min,name:a[0].n}}).sort((p,q)=>q.a[0].d.localeCompare(p.a[0].d))}
 const SEED=()=>({
-items:ITIN0(),iv:3,
+items:ITIN0(),iv:4,
 pack:[...PREP0(),...PACK0()],v:3,
 stores:['Cezanne','Canmake','3Coins','藥妝店','伴手禮'],
 shop:[['藥妝店','EVE 止痛藥'],['藥妝店','合利他命'],['伴手禮','Pablo 起司塔'],['伴手禮','京都抹茶']].map((a,i)=>({id:'s'+i,store:a[0],text:a[1],jp:'',tw:'',done:false,c:0})),
@@ -500,6 +501,10 @@ function norm(s){s=s||SEED();s.items=s.items||{};for(let i=0;i<5;i++)s.items[i]=
   s.members=[...new Set([...FOUR,...[...used].filter(m=>m&&!isP(m))])];s.sv=1}
  s.simg=(s.simg&&typeof s.simg==='object')?s.simg:{};Object.keys(s.simg).forEach(k=>s.simg[k]=arr(s.simg[k]));
  s.shop.forEach(x=>{const a=[...(x.img?[x.img]:[]),...arr(x.imgs)];if(a.length)s.simg[x.id]=[...(s.simg[x.id]||[]),...a.filter(u=>!(s.simg[x.id]||[]).includes(u))];delete x.img;delete x.imgs});s.pv=1;
+ if(!(s.fl>=1)){s.flights=arr(s.flights);if(!s.flights.length)s.flights=FL0();
+  if(!s.pack.some(x=>x.id==='a200')){const M4=s.members.filter(m=>!isP(m));s.pack.unshift({id:'a200',g:'行前準備',text:'12/14 06:30 起：BR178 網路報到＋選位（起飛前 48 小時開放）',done:false,c:0,mode:'each',ppl:M4.map(n=>({n,done:false}))})}
+  s.fl=1}
+ s.flights=arr(s.flights);
  s.sm=arr(s.sm);s.smc=(s.smc&&typeof s.smc==='object')?s.smc:{};
  if(!(s.fv>=1)){s.food=arr(s.food);if(!s.food.length)s.food=FOOD0();s.coll=arr(s.coll);if(!s.coll.length)s.coll=COLL0();s.fv=1}
  if(!(s.fv>=2)){const m=Object.fromEntries(FOOD0().map(x=>[x.name,x.intro]));s.food=s.food.map(x=>({...x,intro:x.intro||m[x.name]||''}));s.fv=2}
@@ -508,6 +513,12 @@ function norm(s){s=s||SEED();s.items=s.items||{};for(let i=0;i<5;i++)s.items[i]=
  s.hist=arr(s.hist);
  if(!(s.hv>=2)){s.hist=s.hist.map(x=>({...x,cat:x.cat||hclass(x)}));s.hv=2}
  if(!(s.iv>=3)){const N=ITIN0();for(let d=0;d<5;d++){const keep=s.items[d].filter(x=>!OLDN.has(x.name)&&!/^[ij]\d+$/.test(x.id));s.items[d]=[...N[d],...keep].sort((a,b)=>a.time.localeCompare(b.time))}s.iv=3}
+ if(!(s.iv>=4)){const pt=(d,pre,f)=>(s.items[d]||[]).forEach(x=>{if(x.name.startsWith(pre))f(x)});
+  pt(0,'關西機場（抵達）',x=>{x.note='長榮 BR178 06:30 桃園起飛，約 10:20 抵達（日本比台灣快 1 小時）'});
+  pt(4,'551蓬萊',x=>{x.time='12:15'});
+  pt(4,'退房',x=>{x.g={...x.g,story:'航班 18:10，下午還有時間，行李先寄放比較輕鬆。'}});
+  pt(4,'取行李',x=>{x.time='13:15';x.name='取行李 → 前往關西機場（BR129 18:10）';x.note='建議 14:45 前到機場，先辦退稅再託運';x.tr='約 14:00 搭南海 Rapi:t（約 40 分）；到機場先到退稅機，再去長榮櫃檯';x.g={...x.g,story:'BR129 18:10 起飛。退稅海關確認要在託運前完成，詳細時間表在行李頁的「航班」。'}});
+  if(s.items[4])s.items[4].sort((a,b)=>a.time.localeCompare(b.time));s.iv=4}
  if(!(s.v>=2)){s.pack=s.pack.filter(x=>!/^p[0-5]$/.test(x.id));const hv=new Set(s.pack.map(x=>x.text));PACK0().forEach(x=>{if(!hv.has(x.text))s.pack.push(x)});
   const hp=new Set(s.prep.map(x=>x.text));PREP0().forEach(x=>{if(!hp.has(x.text))s.prep.push(x)});s.v=2}
  if(s.v<3){const ids=new Set(s.pack.map(x=>x.id));s.pack=[...s.prep.map(x=>({...x,g:'行前準備'})).filter(x=>!ids.has(x.id)),...s.pack];s.prep=[];s.v=3}
@@ -527,7 +538,7 @@ function save(){
  R()}
 function apply(v){S=norm(v);shadow=flat(clean(S));ready=true;lastSync=new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit',hour12:false});
  localStorage.setItem(LKEY+room,JSON.stringify(S));
- if(!(v.v>=3&&v.iv>=3&&v.fv>=2&&v.hv>=2&&v.sv>=1&&v.pv>=1))ref.set(clean(S));
+ if(!(v.v>=3&&v.iv>=4&&v.fl>=1&&v.fv>=2&&v.hv>=2&&v.sv>=1&&v.pv>=1))ref.set(clean(S));
  if(!(document.activeElement&&document.activeElement.tagName==='INPUT'))R(true)}
 function boot(){
  const local=localStorage.getItem(LKEY+room);S=norm(local?JSON.parse(local):null);
@@ -557,7 +568,7 @@ function R(keep){const snap=keep?formSnap():null;
  else if(tab==='shop')h+=segBar()+(shopMode==='hist'?histView():shopView());
  else if(tab==='food')h+=foodView();
  else if(tab==='coll')h+=collView();
- else h+=(tab==='pack'?hotelView():'')+listView(tab);
+ else h+=(tab==='pack'?flightView()+hotelView():'')+listView(tab);
  $('#app').innerHTML=h;if(snap)formRestore(snap);tick();
  if(tab==='trip')weather(day);
 }
@@ -618,6 +629,17 @@ function addForm(){
  <div class="btns"><button class="btn p" data-a="saveadd">加入</button><button class="btn" data-a="close">取消</button></div></div>`;
  showSheet();
 }
+function fmtT(d){const z=n=>String(n).padStart(2,'0');return z(d.getMonth()+1)+'/'+z(d.getDate())+' '+z(d.getHours())+':'+z(d.getMinutes())}
+function flightPlan(f){const dep=new Date(f.date+'T'+f.time+':00');if(isNaN(dep))return[];const rf=!!f.refund,
+ st=rf?[[-2880,'🪑 網路報到＋選位開放（起飛前 48 小時）'],[-210,'📍 建議抵達機場（要先辦退稅，所以抓 3.5 小時前）'],[-205,'🧾 先做退稅海關確認（託運前；綠燈完成、紅燈要帶商品查驗）'],[-170,'🧳 退稅完成後辦理報到、託運行李（櫃檯約起飛前 2–3 小時開始）'],[-120,'🛂 出境審查＋安檢'],[-60,'⏰ 報到、託運的最後期限（起飛前 1 小時）'],[-40,'🚪 建議到登機門']]
+ :[[-2880,'🪑 網路報到＋選位開放（起飛前 48 小時）'],[-180,'🧳 行李櫃檯開始受理（約起飛前 2–3 小時）'],[-150,'📍 建議抵達機場，先託運行李'],[-110,'🛂 出境審查＋安檢'],[-60,'⏰ 報到、託運的最後期限（起飛前 1 小時）'],[-40,'🚪 建議到登機門']];
+ return st.map(([m,t])=>[fmtT(new Date(dep.getTime()+m*60000)),t])}
+function flightView(){return `<div class="sec big">✈️ 航班</div>`+S.flights.map((f,i)=>{const mm=(f.time||'').split(':'),early=(+mm[0]*60+(+mm[1]||0))<540;
+ return `<div class="hero" style="margin:8px 4px 8px 0"><div class="tag2">${esc(f.no)}・${esc((f.date||'').slice(5).replace('-','/'))}</div>
+ <div class="hl">${esc(f.route)}　起飛 <b>${esc(f.time)}</b></div>${f.note?`<div class="sub">${esc(f.note)}</div>`:''}
+ <details class="tips" open><summary>⏱ 選位、報到與抵達機場時間表</summary>${flightPlan(f).map(([a,b])=>`<div class="hl"><b style="min-width:6.2em">${esc(a)}</b> ${esc(b)}</div>`).join('')}
+ <div class="sub">時間是我依長榮的規定推算，以機場和長榮公告為準：網路報到在起飛前 48 小時到 1 小時；櫃檯通常起飛前 2–3 小時開始；報到最晚起飛前 1 小時。${early&&!f.refund?'這班很早，台北車站 A1 站的行李託運（06:00 起）用不到，直接去桃園機場櫃檯。':''}${f.refund?'退稅機台在關西機場第 1 航廈 4 樓、第 2 航廈 1 樓；也可以用 Visit Japan Web 在機場指定 Wi-Fi 辦理。官方沒有規定固定要提早多久，這裡抓 3.5 小時，商品多或遇到紅燈查驗要更久。':''}</div></details>
+ <div class="btns"><button class="btn" data-a="fledit" data-v="${i}">✏️ 編輯航班</button><a class="btn b" target="_blank" rel="noopener" href="https://www.evaair.com/zh-tw/fly-prepare/at-the-airport/check-in/online-check-in/">長榮網路報到說明</a></div></div>`}).join('')}
 function hotelView(){
  const o=S.hotel,L=(e,t,v)=>v?`<div class="hl">${e} <b>${t}</b> ${esc(v)}</div>`:'';
  return `<div class="sec big">🏨 住宿</div><div class="hero" style="margin-top:8px"><div class="tag2">${esc(o.name)}</div>
@@ -672,7 +694,7 @@ function shopView(){
    <li>改為「先付後退」：結帳先付含稅價（一般 10%、食品 8%），出境時經海關確認商品帶出日本後才退稅。</li>
    <li>同一店家、同一天，未稅合計滿 <b>¥5,000</b> 才能退稅；一般物品與消耗品可合併計算。</li>
    <li>購買日起 <b>90 天內</b>，在機場或港口的退稅確認機辦理。</li>
-   <li>退稅商品在出境確認前不要拆封使用，也先不要放進託運行李。12/20 18:30 起飛，請在託運行李前先辦完，預留時間。</li>
+   <li>退稅商品在出境確認前不要拆封使用，也先不要放進託運行李。12/20 BR129 18:10 起飛，請在託運行李前先辦完，預留時間（時間表看行李頁的「航班」）。</li>
    <li>部分退稅業者可能收手續費，實際退稅金額以店家為準。</li></ul>
    <div class="btns"><a class="btn" target="_blank" rel="noopener" href="https://osaka-info.jp/zh-Hant-TW/news/tax_refund_information/">大阪觀光局說明</a><a class="btn b" target="_blank" rel="noopener" href="https://claude.ai/artifact/2yUXdekkPDRsgiUmy1gn4B">📊 舊版比價表（Google）</a></div></details></div>
  <div class="days" style="padding:4px 4px 8px 0"><button class="chip ${!shopWho?'on':''}" data-a="swho" data-v=""><b>全部</b>大家</button>${S.sm.map(m=>`<button class="chip ${shopWho===m?'on':''}" style="background:${smcol(m)};color:#3b2d24;${shopWho===m?'outline:2px solid var(--ink)':''}" data-a="swho" data-v="${esc(m)}"><b>${isP(m)?'🛒 ':''}${esc(m.replace('（代購）',''))}</b>${S.shop.filter(x=>(x.ppl||[]).some(p=>p.n===m&&!p.done)).length} 待買</button>`).join('')}</div>
@@ -888,6 +910,13 @@ function onClick(e){
  else if(a==='hrec'){const n=$('#h-n').value.trim(),pr=parseFloat($('#h-pr').value),d=$('#h-d').value;if(!n||!(pr>=0)||$('#h-pr').value===''){alert('請填寫商品名稱與價格');return}if(!d){alert('請選擇購買日期');return}
   const pl=$('#h-p').value.trim();S.hist.push({id:'W'+Date.now().toString(36),d,n,q:+$('#h-q2').value||1,c:$('#h-c').value,p:pl,pr,t:+$('#h-t').value,r:+$('#h-r').value||RATE,cat:$('#h-cat').value||hclass({n,p:pl})});$('#sheet').classList.remove('show');save()}
  else if(a==='hdel'){const i=S.hist.findIndex(x=>x.id===v);if(i<0)return;const x=S.hist[i];if(confirm('確定要刪除「'+x.n+'」在 '+(x.p||'未填地點')+' 的購買紀錄嗎？')){S.hist.splice(i,1);save()}}
+ else if(a==='fledit'){const f=S.flights[+v];$('#sheet').innerHTML=`<div class="pane"><h2>編輯航班</h2><label>日期</label><input id="fl-d" type="date" value="${esc(f.date)}">
+  <label>航班</label><input id="fl-n" value="${esc(f.no)}"><label>航段</label><input id="fl-r" value="${esc(f.route)}">
+  <label>起飛時間（當地時間）</label><input id="fl-t" type="time" value="${esc(f.time)}">
+  <label class="mc" style="margin:8px 0"><input type="checkbox" id="fl-f" ${f.refund?'checked':''}> 這班要辦退稅（時間表會抓更早）</label>
+  <label>備註</label><input id="fl-m" value="${esc(f.note||'')}">
+  <div class="btns"><button class="btn p" data-a="flsave" data-v="${v}">儲存</button><button class="btn" data-a="close">取消</button></div></div>`;showSheet()}
+ else if(a==='flsave'){const f=S.flights[+v];if(!$('#fl-d').value||!$('#fl-t').value){toast('請填日期與起飛時間');return}f.date=$('#fl-d').value;f.no=$('#fl-n').value.trim();f.route=$('#fl-r').value.trim();f.time=$('#fl-t').value;f.refund=$('#fl-f').checked;f.note=$('#fl-m').value.trim();$('#sheet').classList.remove('show');save()}
  else if(a==='tog'){openS[v]=!openS[v];R()}
  else if(a==='addshop')addShop();
  else if(a==='gal')galOpen(+v);
